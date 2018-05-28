@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title> 系统后台 - 登录</title>
+    <link href="__PUBLIC__Admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__Admin/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__Admin/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/css/style.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/css/login.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+    <script type="text/javascript" src="__PUBLIC__ADMIN/js/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__ADMIN/js/form/validform.js"></script>
+    <script type="text/javascript" src="__PUBLIC__ADMIN/js/form/formacc.js"></script>
+    <script type="text/javascript" src="__PUBLIC__ADMIN/js/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__ADMIN/js/layer/extend/layer.ext.js"></script>
+</head>
+
+<body class="signin">
+
+    <div class="signinpanel" ng-app="login" ng-controller="logCtrl" >
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="signin-info">
+                    <div class="logopanel m-b">
+                        <h1>[ 会员 ]</h1>
+                    </div>
+                    <div class="m-b"></div>
+                    <h4>欢迎使用 <strong>后台管理系统</strong></h4>
+
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <form method="post" action="__ADMIN__/login/doLogin" auto_submit="1" redirect_url="">
+                    <h4 class="no-margins">登录：</h4>
+                    <input type="text" class="form-control uname" name="adminname" ng-model="adminname" placeholder="用户名" />
+                    <input type="password" class="form-control pword m-b" name="password" ng-model="password" placeholder="密码" />
+                    <span style="color:orangered"></span>
+                    <button class="btn btn-success btn-block" >登录</button>
+                </form>
+            </div>
+        </div>
+        <div class="signup-footer">
+            <div class="pull-left">
+                <i class="fa fa-clock-o"></i>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
