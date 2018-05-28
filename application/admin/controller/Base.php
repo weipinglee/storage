@@ -2,22 +2,38 @@
 
 namespace app\admin\Controller;
 use think\Controller;
+use think\Request;
 
 
 class Base extends Controller{
 
-    public function __construct()
-    {
-        //必须先调用父类的构造方法
-        parent::__construct();
-        //判断登录
 
+    public function _initialize()
+    {
+        parent::_initialize();
+
+
+        //判断登录
         if(!session('id'))
             $this->redirect('login/login');
-        //所有管理员都可以访问首页
-        if(CONTROLLER_NAME == 'Index')
+
+        //get module,controller,action name
+        $request = Request::instance();
+
+        return true;//暂部分权限
+
+        $routParam = array(
+            'module'=>$request->module(),
+            'controller'=>$request->controller(),
+            'action' => $request->action()
+        );
+
+        if($routParam['controller']=='Index'){
             return true;
-        $priModel = new Privilege();
+        }
+
+        //权限管理后续再加
+        $priModel = model('Privilege');
         if(!$priModel->chkPri())
         {
             $this->error('无权访问！');

@@ -17,48 +17,48 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
-    <link href="__PUBLIC__/static/Admin/css/bootstrap.min14ed.css" rel="stylesheet">
-    <link href="__PUBLIC__/static/Admin/css/font-awesome.min93e3.css" rel="stylesheet">
-    <link href="__PUBLIC__/static/Admin/css/animate.min.css" rel="stylesheet">
-    <link href="__PUBLIC__/static/Admin/css/style.min862f.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/css/style.min862f.css" rel="stylesheet">
     <!-- Data Tables -->
-    <link href="__PUBLIC__/static/Admin/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
 
-    <link href="__PUBLIC__/static/Admin/js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
 
-    <link href="__PUBLIC__/static/Admin/css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
 
 
     <!-- ================== END BASE CSS STYLE ================== -->
 
     <!-- ================== BEGIN BASE JS ================== -->
-    <script src="__PUBLIC__/static/Admin/js/jquery.min.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/bootstrap.min.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/plugins/layer/layer.min.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/hplus.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/static/Admin/js/contabs.min.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/plugins/pace/pace.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/jquery.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/layer/layer.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/hplus.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/contabs.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/pace/pace.min.js"></script>
 
-    <script src="__PUBLIC__/static/Admin/js/plugins/peity/jquery.peity.min.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/content.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/content.min.js"></script>
 
-    <script src="__PUBLIC__/static/Admin/js/plugins/jeditable/jquery.jeditable.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="__PUBLIC__/static/Admin/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
-    <script src="__PUBLIC__/static/Admin/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/iCheck/icheck.min.js"></script>
     <!--fancybox-->
-    <script src="__PUBLIC__/static/Admin/js/plugins/fancybox/jquery.fancybox.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/fancybox/jquery.fancybox.js"></script>
     <!--blueimp-gallery-->
-    <script src="__PUBLIC__/static/Admin/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
     <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
 
     <!--Sweet Alert弹窗-->
-    <script src="__PUBLIC__/static/Admin/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/sweetalert/sweetalert.min.js"></script>
     <!--layerDate-->
-    <script src="__PUBLIC__/static/Admin/js/plugins/layer/laydate/laydate.js"></script>
+    <script src="__PUBLIC__/Admin/js/plugins/layer/laydate/laydate.js"></script>
 
     <!-- ================== END BASE JS ================== -->
 </head>
@@ -67,11 +67,7 @@
     <div class="row" style="height: auto">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
-                <?php if($_page_btn_refresh):?>
-                <div align="right">
-                    <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="fa fa-spin fa-refresh"></i></a>
-                </div>
-                <?php endif;?>
+
                 <?php if($_page_btn_link):?>
                 <div class="ibox-title" style="height: 5px">
                     <a href="<?php echo $_page_btn_link; ?>" class="btn btn-primary"><?php echo $_page_btn_name;?></a>

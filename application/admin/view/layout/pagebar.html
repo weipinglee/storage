@@ -1,0 +1,31 @@
+<!--page-->
+
+{if condition="isset($pageData)"}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="dataTables_info" id="DataTables_Table_0_info" >显示{$pageData['firstPage']}到{$pageData['lastPage']}页，共{$pageData['totalPage']}页</div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="dataTables_paginate paging_simple_numbers" >
+            <ul class="pagination">
+                <li class="paginate_button previous">
+                    <a href="{$pageData['page']['head']['url']}">{$pageData['page']['head']['text']}</a>
+                </li>
+                {foreach $pageData['page'] as $key=>$item}
+                {if condition="is_integer($key)"}
+                {assign name="class" value=""/}
+                {if condition="$key==$pageData['current']"}{assign name="class" value="active"/}{/if}
+                <li class='paginate_button previous {$class}'>
+                    <a href="{$item['url']}">{$item['text']}</a>
+                </li>
+                {/if}
+                {/foreach}
+                <li class="paginate_button previous">
+                    <a href="{$pageData['page']['last']['url']}">{$pageData['page']['last']['text']}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{/if}

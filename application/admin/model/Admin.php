@@ -25,7 +25,20 @@ class Admin extends Base{
         $this->validateObj = new Validate($this->rules);
     }
 
+    public function check($data,&$error){
+        if($this->validateObj->check($data,$this->rules)){
+            return true;
+        }
+        $error = $this->validateObj->getError();
+        return false;
+    }
 
+    /**
+     * 管理员登陆验证处理
+     * @param $adminname
+     * @param $pass
+     * @return array
+     */
     public function login($adminname,$pass){
         $validate = $this->validateObj;
         if($validate->check(array('adminname'=>$adminname,'password'=>$pass))){
@@ -45,7 +58,14 @@ class Admin extends Base{
         }
     }
 
+    /**
+     * 登出
+     */
     public function logout(){
         Session::clear();
     }
+
+
+
+
 }

@@ -12,12 +12,9 @@ class Index extends Base
 {
     public function index()
     {
-        $model = D('Privilege');
-        $menus = $model->getMenus();
-//        var_dump($menus);exit();
-        $this->assign(
-            'menus', $menus
-        );
-        $this->display();
+        $priObj = model('Privilege');
+        $menus = $priObj->getMenus();//print_r($menus);
+        $this->assign('menus',$menus);
+        return $this->fetch('index');
     }
 }
