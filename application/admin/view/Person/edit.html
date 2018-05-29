@@ -1,0 +1,124 @@
+<layout name="layout"/>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>修改人员资料 <small></small></h5>
+
+            </div>
+            <div class="ibox-content">
+                <form method="post" action="{:url('admin/Person/edit')}" class="form-horizontal" auto_submit="1" redirect_url="{:url('admin/Person/lst')}">
+                     <input type="hidden" name="id" value="{$data['id']}" />
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">姓       名：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" value="{$data['name']}" name="name" style="width: 50%;" nullmsg="请填写姓名" datatype="*"/>
+
+                        </div>
+
+                        <label class="col-sm-2 control-label">手        机：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="mobile" value="{$data['mobile']}" datatype="mobile" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">性        别：</label>
+                        <div class="col-sm-10 my-margin">
+                            <select class="form-control" name="sex" style="width: 50%;">
+                                <option value="男" {if condition="$data['sex'] eq '男'"}selected="true"{/if}>男</option>
+                                <option value="女" {if condition="$data['sex'] eq '女'"}selected="true"{/if}>女</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2 control-label">名族：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" value="{$data['zu']}" name="zu"  style="width: 50%;" />
+                        </div>
+                        <label class="col-sm-2 control-label">籍贯：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="place" value="{$data['place']}" style="width: 50%;" />
+                        </div>
+                        <label class="col-sm-2 control-label">生日：</label>
+                        <div class="col-sm-10 my-margin" >
+                            <input class=" form-control"   type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
+                                   name="birth" value="{$data['birth']}" style="width: 50%;">
+
+                        </div>
+
+                        <label class="col-sm-2 control-label">工作年限：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="work_years" value="{$data['work_years']}" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">身份证号：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="shenfenzheng" value="{$data['shenfenzheng']}" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">学历：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="edu" value="{$data['edu']}" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">毕业院校：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="biye" value="{$data['biye']}"  style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">邮箱：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="email" value="{$data['email']}" datatype="e" ignore="ignore" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">婚姻状况：</label>
+                        <div class="col-sm-10 my-margin">
+                            <select class="form-control" name="is_marry" style="width: 50%;">
+                                <option value="未婚" {if condition="$data['sex'] eq '未婚'"}selected="true"{/if}>未婚</option>
+                                <option value="已婚" {if condition="$data['sex'] eq '已婚'"}selected="true"{/if}>已婚</option>
+                            </select>
+                        </div>
+
+
+                        <label class="col-sm-2 control-label">配偶姓名：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="mate_name" value="{$data['mate_name']}" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">电话：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="mate_phone" datatype="mobile" value="{$data['mate_phone']}" ignore="ignore" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">紧急联系人：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="emeg_cont_name" value="{$data['emeg_cont_name']}" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">紧急联系电话：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" name="emeg_cont_phone" value="{$data['emeg_cont_phone']}" ignore="ignore" datatype="mobile" style="width: 50%;" />
+                        </div>
+
+
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",})
+    });
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+

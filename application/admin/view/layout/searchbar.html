@@ -1,0 +1,32 @@
+{if condition="isset($search)"}
+<?php
+  $serachData = array();
+  if(isset($_GET)){
+      foreach($_GET as $key=>$val){
+          $searchData[$key] = $val;
+      }
+  }
+?>
+<div class="">
+    <div class="col-sm-6" style="width:100%;">
+        <form action="" method="get">
+            <div id="DataTables_Table_0_filter" class="dataTables_filter" style="float:right">
+
+                {foreach name="search" item="val"}
+                     {if condition="!isset($searchData[$key])"}
+                       {assign name="$searchData[$key]" value="" /}
+                     {/if}
+                    <span>{$val}:</span><input type="search" name="{$key}" value="{$searchData[$key]}" class="form-control input-sm" style="display:inline" aria-controls="DataTables_Table_0"/>
+
+                {/foreach}
+
+                <input type="submit"  class="btn btn-primary" style="display:inline" aria-controls="DataTables_Table_0" value="查找"/>
+
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+{/if}
