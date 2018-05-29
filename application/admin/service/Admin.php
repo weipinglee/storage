@@ -56,13 +56,15 @@ class Admin extends Base{
          $name = isset($data['adminname']) ? $data['adminname'] : '';
          $pass = isset($data['password']) ? $data['password'] : '';
          if($name && $pass){
-
-             $has = $this->dbObj->where(array('adminname'=>$name))->getObj();
+             $this->dbObj->beginTrans();
+             $has = $this->dbObj->where(array('adminname'=>$name))->lock('update')->getObj();
              if(!empty($has)){
                  $this->errors = '该管理员名称已存在';
              }elseif($this->model->check($data,$this->errors)){//验证通过
                  $num = $this->dbObj->data($data)->add();
+
                  if($num>0){
+                     $this->dbObj->commit();
                      return $this->getSuccInfo();
                  }else{
                      $this->errors = '添加失败';
@@ -73,6 +75,7 @@ class Admin extends Base{
          }
 
          if($this->errors){
+             $this->dbObj->rollBack();
              return $this->getSuccInfo(0,$this->errors);
          }
 
@@ -115,7 +118,7 @@ class Admin extends Base{
             $update['adminname'] = $data['adminname'];
         }
         if(isset($data['password'])){
-            $update['password'] = md5($update['password']);
+            $update['password'] = md5($data['password']);
         }
         if(empty($update)){
             return $this->getSuccInfo(0,'更新字段为空');

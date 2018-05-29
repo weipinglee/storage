@@ -40,17 +40,30 @@ class Admin extends Base
     public function add()
     {
         $request = Request::instance();
-        $res = $this->serviceModel->add($request->param());
-        die(json_encode($res));
+        if($request->isPost()){
+            $res = $this->serviceModel->add($request->param());
+            die(json_encode($res));
+        }elseif($request->isGet()){
+            return $this->fetch();
+        }
+
 
     }
     public function edit()
     {
         $request = Request::instance();
-        $id = $request->param('id');
-        $data = $request->param();
-        $res = $this->serviceModel->edit($id,$data);
-        die(json_encode($res));
+        if($request->isPost()){
+            $id = $request->param('id');
+            $data = $request->param();
+            $res = $this->serviceModel->edit($id,$data);
+            die(json_encode($res));
+        }elseif($request->isGet()){
+            $id = $request->param('id');
+            $data = $this->serviceModel->data($id);
+            $this->assign('data',$data);
+            return $this->fetch();
+        }
+
     }
     public function delete()
     {

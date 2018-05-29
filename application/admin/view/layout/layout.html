@@ -72,11 +72,11 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
 
-                <?php if($_page_btn_link):?>
+                <?php if(isset($_page_btn_link)){?>
                 <div class="ibox-title" style="height: 5px">
                     <a href="<?php echo $_page_btn_link; ?>" class="btn btn-primary"><?php echo $_page_btn_name;?></a>
                 </div>
-                <?php endif;?>
+                <?php } ?>
             </div>
         </div>
     </div>
