@@ -25,7 +25,7 @@
                             <a title="编辑" href="<?php echo url('edit?id='.$v['id'].'&p='.$v['id']); ?>"  style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <?php if($v['id'] >1) :?>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a title="删除" href="<?php echo url('delete?id='.$v['id']); ?>" onclick="return confirm('确定要删除吗？');" class="ml-5" style="text-decoration:none;color: red;"><i class="fa fa-trash-o"></i></a>
+                            <a title="删除" ajax_delete="1" ajax_confirm="1" ajax_id="{$v['id']}" ajax_url="{:url('Admin/admin/delete')}" class="ml-5" style="text-decoration:none;color: red;"><i class="fa fa-trash-o"></i></a>
                             <?php endif; ?>
                         </td>
                     </tr>

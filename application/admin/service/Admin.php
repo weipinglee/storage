@@ -37,6 +37,7 @@ class Admin extends Base{
         $query = new \extDB\DbQuery('admin');
         $query->page = $page;
         $query->pagesize = 10;
+        $query->where = 'del=0';
         $data = $query->find();
         $pageData = $query->getPageData();
          return array('data'=>$data,'page'=>$pageData);
@@ -87,7 +88,14 @@ class Admin extends Base{
              $this->errors = '管理员不存在';
          }
          $id = intval($id);
-         return $this->dbObj->where(array('id'=>$id))->data(array('del'=>1))->update();
+         if($id==1){
+             $this->errors = '超级管理员不能删除';
+         }
+         if($this->errors){
+             return $this->getSuccInfo(0,$this->errors);
+         }
+          $this->dbObj->where(array('id'=>$id))->data(array('del'=>1))->update();
+         return $this->getSuccInfo();
 
     }
 
@@ -109,7 +117,12 @@ class Admin extends Base{
         if(isset($data['password'])){
             $update['password'] = md5($update['password']);
         }
-        return $this->dbObj->where(array('id'=>$id))->data($update)->update();
+        if(empty($update)){
+            return $this->getSuccInfo(0,'更新字段为空');
+        }
+         $this->dbObj->where(array('id'=>$id))->data($update)->update();
+        return $this->getSuccInfo();
+
     }
 
 
