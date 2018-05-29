@@ -80,8 +80,15 @@
                 <?php if(isset($_page_btn_link)){?>
                 <div class="ibox-title" style="height: 5px">
                     <a href="<?php echo $_page_btn_link; ?>" class="btn btn-primary"><?php echo $_page_btn_name;?></a>
+                    <a href="javascript:history.back()" class="btn btn-primary">返回</a>
+                </div>
+                <?php }else {?>
+                <div class="ibox-title" style="height: 5px">
+                    <a href="javascript:history.back()" class="btn btn-primary">返回</a>
                 </div>
                 <?php } ?>
+
+
             </div>
         </div>
     </div>
