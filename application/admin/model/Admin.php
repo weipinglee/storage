@@ -8,30 +8,44 @@
 // +----------------------------------------------------------------------
 namespace app\admin\Model;
 
-use think\Validate;
+
 use \extDB\DbModel;
 use think\Session;
 class Admin extends Base{
 
 
-    protected $validateObj = null;
+    protected $tableName = 'admin';
     protected $rules = array(
-        'adminname' => 'require|max:32',
+        'adminname' => array(
+            'max'=>32
+        )
+    );
+
+    protected $insertRules = array(
+        'adminname'=>array('require','unique'=>'admin'),
         'password' => 'require'
+    );
+
+    protected $updateRules = array(
+        'adminname'=>array('unique'=>'admin'),
+    );
+
+
+    protected $message  =   [
+        'adminname.require' => '名称必须',
+        'adminname.max'     => '名称最多不能超过32个字符',
+        'adminname.unique'  => '管理员名称已存在'
+    ];
+    protected $field = array(
+        'adminname'=>'管理员'
     );
 
     public function __construct()
     {
-        $this->validateObj = new Validate($this->rules);
+       parent::__construct();
     }
 
-    public function check($data,&$error){
-        if($this->validateObj->check($data,$this->rules)){
-            return true;
-        }
-        $error = $this->validateObj->getError();
-        return false;
-    }
+
 
     /**
      * 管理员登陆验证处理

@@ -8,25 +8,16 @@
 // +----------------------------------------------------------------------
 namespace app\admin\service;
 
-use app\admin\model\Base;
-use think\Validate;
 use \extDB\DbModel;
-use think\Session;
 class Person extends Base{
 
 
-
-    protected $errors = '';
-
-
-    protected $dbObj = null;
-    protected $model = null;
-    protected $tableName = '';
 
     public function __construct()
     {
         $this->model = \think\Loader::model('Person','model');
         $this->tableName = $this->model->getTable();
+        $this->pk = $this->model->getPk();
         $this->dbObj = new DbModel($this->tableName);
     }
 
@@ -49,7 +40,7 @@ class Person extends Base{
          return array('data'=>$data,'page'=>$pageData);
     }
 
-    public function data($id){
+    public function row($id){
          return $this->dbObj->where(array('id'=>$id))->getObj();
     }
 
@@ -64,7 +55,7 @@ class Person extends Base{
          if($name && $mobile){
              $this->dbObj->beginTrans();
 
-             if($this->model->check($data,$this->errors)) {//验证通过
+             if($this->model->checkInsert($data,$this->errors)) {//验证通过
                  $num = $this->dbObj->data($data)->add();
 
                  if ($num > 0) {
@@ -90,7 +81,7 @@ class Person extends Base{
      * @param int $id
      * @return mixed
      */
-    public function delete($id){
+    public function del($id){
         $id = intval($id);
          if($id<=0){
              $this->errors = '人员不存在';

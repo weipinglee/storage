@@ -8,24 +8,19 @@
 // +----------------------------------------------------------------------
 namespace app\admin\service;
 
-use app\admin\model\Base;
-use think\Validate;
+
 use \extDB\DbModel;
-use think\Session;
+
 class Admin extends Base{
 
 
-
-    protected $errors = '';
-
-
-    protected $dbObj = null;
-    protected $model = null;
-
     public function __construct()
     {
-        $this->dbObj = new DbModel('admin');
         $this->model = \think\Loader::model('Admin','model');
+        $this->tableName = $this->model->getTable();
+        $this->pk = $this->model->getPk();
+        $this->dbObj = new DbModel($this->tableName);
+
     }
 
 
@@ -34,7 +29,7 @@ class Admin extends Base{
      * @param string $where
      */
     public function lists($page=1,$where=''){
-        $query = new \extDB\DbQuery('admin');
+        $query = new \extDB\DbQuery($this->tableName);
         $query->page = $page;
         $query->pagesize = 10;
         $query->where = 'del=0';
@@ -43,7 +38,7 @@ class Admin extends Base{
          return array('data'=>$data,'page'=>$pageData);
     }
 
-    public function data($id){
+    public function row($id){
          return $this->dbObj->where(array('id'=>$id))->getObj();
     }
 
@@ -57,10 +52,8 @@ class Admin extends Base{
          $pass = isset($data['password']) ? $data['password'] : '';
          if($name && $pass){
              $this->dbObj->beginTrans();
-             $has = $this->dbObj->where(array('adminname'=>$name))->lock('update')->getObj();
-             if(!empty($has)){
-                 $this->errors = '该管理员名称已存在';
-             }elseif($this->model->check($data,$this->errors)){//验证通过
+             if($this->model->checkInsert($data,$this->errors)){//验证通过
+                 $data['password'] = md5($data['password']);
                  $num = $this->dbObj->data($data)->add();
 
                  if($num>0){
@@ -86,7 +79,7 @@ class Admin extends Base{
      * @param int $id
      * @return mixed
      */
-    public function delete($id){
+    public function del($id){
          if(intval($id)<=0){
              $this->errors = '管理员不存在';
          }

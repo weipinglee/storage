@@ -36,6 +36,15 @@ class Loan extends Base{
 
     );
 
+    protected $insertRules = array(
+        'person_id' => 'require',
+
+    );
+
+    protected $uniqueFields = array(
+
+    );
+
     public function __construct()
     {
         $this->validateObj = new Validate($this->rules);

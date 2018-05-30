@@ -58,7 +58,7 @@ class PersonBank extends Base{
             $person_id = $request->param('person_id');
             if($person_id){
                 $personModel = \think\Loader::model('Person','service');
-                $personData = $personModel->data($person_id);
+                $personData = $personModel->row($person_id);
                 $this->assign('personData',$personData);
             }
             $this->assign('person_id',$person_id);
@@ -78,7 +78,7 @@ class PersonBank extends Base{
             die(json_encode($res));
         }elseif($request->isGet()){
             $id = $request->param('id');
-            $data = $this->serviceModel->data($id);
+            $data = $this->serviceModel->row($id);
             $this->assign('data',$data);
             return $this->fetch();
         }
@@ -87,7 +87,7 @@ class PersonBank extends Base{
     public function delete()
     {
         $request = Request::instance();
-        $res = $this->serviceModel->delete($request->param('id'));
+        $res = $this->serviceModel->del($request->param('id'));
         die(json_encode($res));
     }
 

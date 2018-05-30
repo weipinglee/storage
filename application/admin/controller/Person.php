@@ -73,7 +73,7 @@ class Person extends Base{
             die(json_encode($res));
         }elseif($request->isGet()){
             $id = $request->param('id');
-            $data = $this->serviceModel->data($id);
+            $data = $this->serviceModel->row($id);
             $this->assign('data',$data);
             return $this->fetch();
         }
@@ -82,7 +82,7 @@ class Person extends Base{
     public function delete()
     {
         $request = Request::instance();
-        $res = $this->serviceModel->delete($request->param('id'));
+        $res = $this->serviceModel->del($request->param('id'));
         die(json_encode($res));
     }
 

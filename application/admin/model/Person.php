@@ -18,8 +18,8 @@ class Person extends Base{
 
     protected $tableName = 'person';
     protected $rules = array(
-        'name' => 'require|max:30',//姓名
-        'mobile' => 'require',//手机号
+        'name' => array('max'=>30),//姓名
+        'mobile' => array('regex'=>'/^\d{6,15}$/i'),//手机号
         'sex'    => 'chsAlpha',//性别
         'zu'     => 'chsAlpha',//名族
         'birth'  => 'date',//生日
@@ -37,30 +37,25 @@ class Person extends Base{
 
     );
 
+
+
+
+    protected $insertRules = array(
+        'name' => array('require'),
+        'mobile' => array('require')
+    );
+
+    protected $searchFields = array(
+        'name' => '姓名',
+        'mobile' => '手机号'
+    );
+
     public function __construct()
     {
-        $this->validateObj = new Validate($this->rules);
-    }
-
-    public function check($data,&$error){
-        if($this->validateObj->check($data,$this->rules)){
-            return true;
-        }
-        $error = $this->validateObj->getError();
-        return false;
-    }
-
-    public function getTable(){
-        return $this->tableName;
+        parent::__construct();
     }
 
 
-    public function searchFields(){
-        return array(
-            'name' => '姓名',
-            'mobile' => '手机号'
-        );
-    }
 
 
 
