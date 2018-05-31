@@ -37,7 +37,23 @@ class Loan extends Base{
 
     );
 
-
+    protected $fieldType = array(
+        'person_id'=>'int',
+        'begin_date' => 'date',
+        'end_date'   => 'date',
+        'exp_income'   => 'float',
+        'loan_amount'  => 'float',
+        'period'       => 'varchar',
+        'rate'         => 'float',
+        'rec_person'   => 'int',
+        'rec_rate'     => 'float',
+        'exp_final_income' => 'float',
+        'real_end_date' => 'date',
+        'real_final_income' => 'float',
+        'real_income'   => 'float',
+        // 'manual_over_time' => ''
+        'status'       => 'varchar'
+    );
 
 
     protected $searchFields = array(

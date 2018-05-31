@@ -51,24 +51,25 @@ class Loan extends Base{
      * @return array
      */
     public function add($data){
-         $name = isset($data['adminname']) ? $data['adminname'] : '';
-         $pass = isset($data['password']) ? $data['password'] : '';
-         if($name && $pass){
-             $this->dbObj->beginTrans();
-             if($this->model->checkInsert($data,$this->errors)){//验证通过
-                 $data['password'] = md5($data['password']);
-                 $num = $this->dbObj->data($data)->add();
 
-                 if($num>0){
-                     $this->dbObj->commit();
-                     return $this->getSuccInfo();
-                 }else{
-                     $this->errors = '添加失败';
-                 }
+         $this->dbObj->beginTrans();
+         if($this->model->checkInsert($data,$this->errors)){//验证通过
+             if($data['begin_date']==''){
+                 $data['begin_date'] = null;
              }
-         }else{
-             $this->errors = '用户名和密码不能为空';
+             if($data['end_date']==''){
+                 $data['end_date'] = null;
+             }
+             $num = $this->dbObj->data($data)->add();
+
+             if($num>0){
+                 $this->dbObj->commit();
+                 return $this->getSuccInfo();
+             }else{
+                 $this->errors = '添加失败';
+             }
          }
+
 
          if($this->errors){
              $this->dbObj->rollBack();
