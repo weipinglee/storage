@@ -9,12 +9,8 @@
 namespace app\admin\Model;
 
 use think\Validate;
-use \extDB\DbModel;
-use think\Session;
+
 class Loan extends Base{
-
-
-    protected $validateObj = null;
 
     protected $tableName = 'loan';
     protected $rules = array(
@@ -41,47 +37,26 @@ class Loan extends Base{
 
     );
 
-    protected $uniqueFields = array(
 
+
+
+    protected $searchFields = array(
+        'begin_date' => array(
+            'text'=>'开始日期',
+            'type'=> 'greater'
+        ),
+
+        'end_date' => array(
+            'text'=>'结束日期',
+            'type'=> 'less'
+        ),
+        'loan_amount' => array(
+            'text'=>'借贷资金',
+            'type'=> 'between'
+        ),
+        'rec_person' => '推荐人'
     );
 
-    public function __construct()
-    {
-        $this->validateObj = new Validate($this->rules);
-    }
-
-    public function check($data,&$error){
-        if($this->validateObj->check($data,$this->rules)){
-            return true;
-        }
-        $error = $this->validateObj->getError();
-        return false;
-    }
-
-    public function getTable(){
-        return $this->tableName;
-    }
-
-
-    public function searchFields(){
-        return array(
-            'begin_date' => array(
-                'text'=>'开始日期',
-                'type'=> 'greater'
-            ),
-
-            'end_date' => array(
-                'text'=>'结束日期',
-                'type'=> 'less'
-            ),
-            'loan_amount' => array(
-                'text'=>'借贷资金',
-                'type'=> 'between'
-            ),
-            'rec_person' => '推荐人'
-
-        );
-    }
 
 
 

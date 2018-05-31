@@ -11,7 +11,7 @@ namespace app\admin\Model;
 use app\admin\validate\MyValidate;
 
 
-class Base{
+abstract class Base{
 
 
     protected $validateObj = null;//验证类
@@ -21,12 +21,13 @@ class Base{
     protected $searchFields = array();
     protected $message = array();//验证消息
     protected $pk = 'id';
+    protected $fieldDesc = array();
 
     protected $tableName = '';
 
     public function __construct()
     {
-        $this->validateObj = new MyValidate($this->rules,$this->message);
+        $this->validateObj = new MyValidate($this->rules,$this->message,$this->fieldDesc);
     }
 
     public static function getSuccInfo($res=1,$info='',$id='',$time=1){
@@ -61,7 +62,7 @@ class Base{
     }
 
     public function checkInsert($data,&$error){
-        if($this->validateObj->check($data,array_merge($this->insertRules,$this->rules))){
+        if($this->validateObj->check($data,array_merge_recursive($this->insertRules,$this->rules))){
             return true;
         }
         $error = $this->validateObj->getError();
@@ -69,7 +70,7 @@ class Base{
     }
 
     public function checkUpdate($data,&$error){
-        if($this->validateObj->check($data,array_merge($this->updateRules,$this->rules))){
+        if($this->validateObj->check($data,array_merge_recursive($this->updateRules,$this->rules))){
             return true;
         }
         $error = $this->validateObj->getError();

@@ -27,7 +27,7 @@ class Person extends Base{
         'edu'    => 'max:20',//学历
         'biye'   => 'max:100',//毕业院校
         //'work_years' => '',//工作年限
-        'shenfenzheng' => '',//身份证
+        'shenfenzheng' => array('number'),//身份证
         'email'  => 'email',//邮箱
         'is_marry' => 'chsAlpha',//婚姻状况
         'mate_name'  => 'max:30',//配偶姓名
@@ -38,13 +38,24 @@ class Person extends Base{
     );
 
 
+    protected $fieldDesc = array(
+        'shenfenzheng'=>'身份证'
+    );
 
 
     protected $insertRules = array(
         'name' => array('require'),
-        'mobile' => array('require')
+        'mobile' => array('require'),
+        'shenfenzheng' => array('unique'=>'person')
     );
 
+    protected $updateRules = array(
+        'shenfenzheng' => array('unique'=>'person')
+    );
+
+    protected $message  =   [
+        'shenfenzheng.unique' => '该身份证号已存在'
+    ];
     protected $searchFields = array(
         'name' => '姓名',
         'mobile' => '手机号'

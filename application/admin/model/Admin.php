@@ -36,7 +36,7 @@ class Admin extends Base{
         'adminname.max'     => '名称最多不能超过32个字符',
         'adminname.unique'  => '管理员名称已存在'
     ];
-    protected $field = array(
+    protected $fieldDesc = array(
         'adminname'=>'管理员'
     );
 
