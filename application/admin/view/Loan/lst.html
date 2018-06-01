@@ -36,7 +36,9 @@
                         <td>{$v['rec_person']}</td>
                         <td>{$v['status']}</td>
                         <td align="center">
-                            <a title="编辑" href="<?php echo url('edit?id='.$v['id']); ?>"  style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a title="编辑" href="<?php echo url('edit?id='.$v['id']); ?>"  style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                            <a title="结贷" href="<?php echo url('over?id='.$v['id']); ?>"  style="text-decoration:none"><i class="fa fa-money"></i></a>&nbsp;&nbsp;&nbsp;
+                            <a title="删除" ajax_delete="1" ajax_confirm="1" ajax_id="{$v['id']}" ajax_url="{:url('admin/Loan/delete')}" class="ml-5" style="text-decoration:none;color: red;"><i class="fa fa-trash-o"></i></a>
 
                         </td>
                     </tr>

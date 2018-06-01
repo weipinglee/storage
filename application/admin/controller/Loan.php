@@ -106,6 +106,26 @@ class Loan extends Base{
         }
 
     }
+
+    public function over()
+    {
+        $request = Request::instance();
+        if($request->isPost()){
+            $id = $request->param('id');
+            $data = $request->param();
+            $data['manual_over_time'] = date('Y-m-d H:i:s');
+            $data['status'] = '已结束';
+            unset($data['id']);
+            $res = $this->serviceModel->edit($id,$data);
+            die(json_encode($res));
+        }elseif($request->isGet()){
+            $id = $request->param('id');
+            $data = $this->serviceModel->row($id);
+            $this->assign('data',$data);
+            return $this->fetch();
+        }
+
+    }
     public function delete()
     {
         $request = Request::instance();
@@ -124,6 +144,18 @@ class Loan extends Base{
          $rec_rate = $request->param('rec_rate');
          $res = $model->computeIncome($amount,$begin,$end,$rate,$period,$rec_rate);
          die(json_encode($res));
+    }
+
+    /**
+     * 获取最终收益
+     */
+    public function getFinalIncome(){
+        $model = \think\Loader::model('Loan','logic');
+        $request = Request::instance();
+        $end = $request->param('real_end_date');
+        $id = $request->param('id');
+        $res = $model->computeFinalIncome($id,$end);
+        die(json_encode($res));
     }
 
 

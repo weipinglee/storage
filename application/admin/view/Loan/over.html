@@ -3,28 +3,20 @@
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>修改借贷 <small></small></h5>
+                <h5>结算借贷 <small></small></h5>
 
             </div>
             <div class="ibox-content">
-                <form method="post" action="{:url('admin/Loan/edit')}" class="form-horizontal" auto_submit="1" redirect_url="{:url('admin/Loan/lst')}">
+                <form method="post" action="{:url('admin/Loan/over')}" class="form-horizontal" confirm="1" auto_submit="1" redirect_url="{:url('admin/Loan/lst')}">
 
                     <div class="hr-line-dashed"></div>
                     <input type="hidden" name="id" v-model="loan.id" />
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">选择人员：</label>
-                        <input type="hidden" name="person_id" :value="selectPerson.id" datatype="*"/>
-                        <input type="hidden" name="status" :value="loan.status" />
+                        <label class="col-sm-2 control-label">借款人员：</label>
+                        <input type="hidden"  :value="selectPerson.id" />
+
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control"  v-on:blur="selectFirstOne" v-on:focus="inputFocus" v-on:compositionstart="getPersonStart"
-                                   v-on:compositionend="getPersonEnd" v-on:input="getPerson"
-                                   v-model="pname"   list="personList" style="width: 50%;"/>
-                            <div id="person_list" style="position:absolute;z-index:999;background-color: white;width:50%;">
-                                <p v-for="person in persons" :pid="person.id" :mobile="person.mobile" :shenfenzheng="person.shenfenzheng" v-on:click="toselectPerson($event)">{{person.name}}</p>
-
-                            </div>
-
-
+                            <input type="text" class="form-control"  v-model="pname"    style="width: 50%;"/>
 
                         </div>
 
@@ -40,71 +32,80 @@
 
                         <label class="col-sm-2 control-label">开始时间：</label>
                         <div class="col-sm-10 my-margin">
-                            <input class=" form-control" v-model="loan.begin_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})"
-                                   name="begin_date" value="" style="width: 50%;">
+                            <input class=" form-control" v-model="loan.begin_date"  type="text" disabled
+                                    value="" style="width: 50%;">
                         </div>
 
                         <label class="col-sm-2 control-label">结束时间：</label>
                         <div class="col-sm-10 my-margin">
-                            <input class=" form-control"  v-model="loan.end_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                   name="end_date" value="" style="width: 50%;">
+                            <input class=" form-control"  v-model="loan.end_date"  type="text" disabled
+                                    style="width: 50%;">
                         </div>
 
                         <label class="col-sm-2 control-label">贷款金额：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" name="loan_amount" v-model="loan.amount" v-on:blur="computeIncome" class="form-control"  style="width: 50%;" />
+                            <input type="text"  v-model="loan.amount" disabled class="form-control"  style="width: 50%;" />
                         </div>
 
                         <label class="col-sm-2 control-label">借贷周期：</label>
                         <div class="col-sm-10 my-margin">
-                            <select class="form-control" name="period" v-model="loan.period" v-on:change="computeIncome" style="width: 50%;">
-                                <option value="日">日</option>
-                                <option value="月">月</option>
-                                <option value="年">年</option>
-                            </select>
+                            <input type="text" v-model="loan.period" disabled class="form-control"  style="width: 50%;"/>
                         </div>
                         <label class="col-sm-2 control-label">借贷费率：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" name="rate" class="form-control" v-on:blur="computeIncome" v-model="loan.rate" style="width: 50%;display:inline;" /><span>‰</span>
+                            <input type="text" disabled class="form-control"  v-model="loan.rate" style="width: 50%;display:inline;" /><span>‰</span>
                         </div>
 
                         <label class="col-sm-2 control-label">预期收益：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="hidden" name="exp_income"  v-model="loan.exp_income"  />
-                            <input type="text" name="exp_income" disabled class="form-control" v-model="loan.exp_income" style="width: 50%;" />
+                            <input type="text"  disabled class="form-control" v-model="loan.exp_income" style="width: 50%;" />
                         </div>
 
                         <label class="col-sm-2 control-label">推荐人：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" name="rec_person" v-model="loan.rec_person" class="form-control"  style="width: 50%;" />
+                            <input type="text"  v-model="loan.rec_person" class="form-control"  style="width: 50%;" />
                         </div>
 
                         <label class="col-sm-2 control-label">推荐人分成：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" name="rec_rate" v-model="loan.rec_rate" v-on:blur="computeIncome" class="form-control"  style="width: 50%;display:inline;" /><span>%</span>
+                            <input type="text"  v-model="loan.rec_rate"  class="form-control"  style="width: 50%;display:inline;" /><span>%</span>
                         </div>
 
                         <label class="col-sm-2 control-label">预期收益-分成：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="hidden" name="exp_final_income"  v-model="loan.exp_final_income"  />
-
                             <input type="text"  disabled v-model="loan.exp_final_income" class="form-control"  style="width: 50%;" />
                         </div>
 
-                    </div>
+                        <label class="col-sm-2 control-label">结贷日期：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input class=" form-control"  v-model="loan.real_end_date" v-on:blur="computeFinalIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                   name="real_end_date" value="" style="width: 50%;">
+                        </div>
 
+
+
+                        <label class="col-sm-2 control-label">最终收益：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="hidden" name="real_income" :value="loan.real_income" />
+                            <input type="text"  disabled class="form-control" v-model="loan.real_income" style="width: 50%;" />
+                        </div>
+                        <label class="col-sm-2 control-label">最终收益-分成：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="hidden" name="real_final_income" :value="loan.real_final_income" />
+                            <input type="text"  disabled class="form-control" v-model="loan.real_final_income" style="width: 50%;" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-danger" v-on:click="formSubmit">手动结束</button>
+                        </div>
+
+
+                    </div>
                     <div class="hr-line-dashed"></div>
 
                 </form>
-                <div class="form-group">
-                    <div class="col-sm-4 col-sm-offset-2">
-                        <button class="btn btn-primary" v-on:click="formSubmit(0)">保存</button>
 
-                        <button class="btn btn-danger" v-on:click="formSubmit(1)">提交</button>
-                    </div>
-
-
-                </div>
             </div>
         </div>
     </div>
@@ -134,7 +135,8 @@
             loan:{id:'{$data["id"]}',begin_date:'{$data["begin_date"]}',end_date:'{$data["end_date"]}',rate:'{$data["rate"]}',
                 amount:'{$data["loan_amount"]}',period:'{$data["period"]}',exp_income:'{$data["exp_income"]}',
                 rec_rate:'{$data["rec_rate"]}',exp_final_income:'{$data["exp_final_income"]}',
-                status:'{$data["status"]}',rec_person:'{$data["rec_person"]}'}
+                status:'{$data["status"]}',rec_person:'{$data["rec_person"]}',real_end_date:'{$data["real_end_date"]}',
+                real_income:'{$data["real_income"]}',real_final_income:'{$data["real_final_income"]}'}
 
 
         },
@@ -217,8 +219,8 @@
                     success : function(data){
                         //console.log(JSON.stringify(data));
                         // console.log(data.exp_income);
-                        _this.loan.exp_income = data.income;
-                        _this.loan.exp_final_income = data.final_income;
+                        _this.loan.exp_income = data.exp_income;
+                        _this.loan.exp_final_income = data.exp_final_income;
                         if(data.info){
                             layer.msg(data.info);
                         }
@@ -226,15 +228,30 @@
                 })
 
             },
-            formSubmit : function(status){
-                if(status===0){
-                    this.loan.status=0;
-                }else{
-                    this.loan.status=1;
-                }
-                //
-                //this.loan.status设置input的值在vue流程的后面，在下一句form.submit()执行时不会改变，所以用jquery设置他的值
-                $('input[name=status]').val(this.loan.status);
+            /**
+             * 计算收益
+             */
+            computeFinalIncome : function(){
+                this.loan.real_end_date = $('input[name=real_end_date]').val();
+                var _this = this;
+                $.ajax({
+                    type:'GET',
+                    url :'{:url("admin/Loan/getFinalIncome")}',
+                    data : this.loan,
+                    dataType : 'json',
+                    success : function(data){
+                        //console.log(JSON.stringify(data));
+                        // console.log(data.exp_income);
+                        _this.loan.real_income = data.income;
+                        _this.loan.real_final_income = data.final_income;
+                        if(data.info){
+                            layer.msg(data.info);
+                        }
+                    }
+                })
+
+            },
+            formSubmit : function(){
                 $('form').submit();
             }
 

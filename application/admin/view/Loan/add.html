@@ -84,7 +84,7 @@
                             <input type="text" name="rec_rate" v-model="loan.rec_rate" v-on:blur="computeIncome" class="form-control"  style="width: 50%;display:inline;" /><span>%</span>
                         </div>
 
-                        <label class="col-sm-2 control-label">最终预期收益：</label>
+                        <label class="col-sm-2 control-label">预期收益-分成：</label>
                         <div class="col-sm-10 my-margin">
                             <input type="hidden" name="exp_final_income"  v-model="loan.exp_final_income"  />
 
@@ -214,8 +214,8 @@
                    success : function(data){
                        //console.log(JSON.stringify(data));
                       // console.log(data.exp_income);
-                       _this.loan.exp_income = data.exp_income;
-                       _this.loan.exp_final_income = data.exp_final_income;
+                       _this.loan.exp_income = data.income;
+                       _this.loan.exp_final_income = data.final_income;
                        if(data.info){
                            layer.msg(data.info);
                        }

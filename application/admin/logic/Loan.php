@@ -70,10 +70,21 @@ class Loan {
 
        }
        $final_income = $final_income<0 ? 0 : $final_income;
-       return array('exp_income'=>$income,'exp_final_income'=>$final_income,'info'=>'');
+       return array('income'=>$income,'final_income'=>$final_income,'info'=>'');
 
 
 
+   }
+
+   public function computeFinalIncome($id,$real_end_date){
+       $model = \think\loader::model('Loan','service');
+       $row = $model->row($id);
+       if(empty($row)){
+           return array('exp_income'=>0,'exp_final_income'=>0,'info'=>'贷款记录不存在');
+       }
+
+       $data = $this->computeIncome($row['loan_amount'],$row['begin_date'],$real_end_date,$row['rate'],$row['period'],$row['rec_rate']);
+       return $data;
    }
 
 
