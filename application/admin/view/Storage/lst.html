@@ -16,6 +16,7 @@
                         <th>借贷周期</th>
                         <th>借贷费率</th>
                         <th>预期收益</th>
+                        <th>超期/到期天数</th>
                         <th>状态</th>
                         <th width="120px">操作</th>
                     </tr>
@@ -34,6 +35,16 @@
                         <td>{$v['period']}</td>
                         <td>{$v['rate']}</td>
                         <td>{$v['exp_income']}</td>
+                        <td>
+                            {if condition="$v['status']=='已提交'"}
+                            {if condition="$v['diff']>0"}
+                            <span style="color:red;">已超期
+                            {$v['diff']}天</span>
+                            {else}
+                            还剩<?php echo -$v['diff'];?>天
+                            {/if}
+                            {/if}
+                        </td>
                         <td>{$v['status']}</td>
                         <td align="center">
                             <a title="编辑" href="<?php echo url('edit?id='.$v['id']); ?>"  style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
