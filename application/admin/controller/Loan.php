@@ -29,6 +29,29 @@ class Loan extends Base{
 
         $where = 'l.del=0';
 
+        $param = $request->param();
+        if(isset($param['end_date_l'])){
+            $where .= ' AND l.end_date >= "'.$param['end_date_l'].'"';
+        }
+        if(isset($param['begin_date_r'])){
+            $where .= ' AND l.end_date <= "'.$param['begin_date_r'].'"';
+        }
+
+        if(isset($param['amount_l']) && floatval($param['amount_l'])>0){
+            $where .= ' AND l.loan_amount >= '.floatval($param['amount_l']);
+        }
+
+        if(isset($param['amount_r']) && floatval($param['amount_r'])>0){
+            $where .= ' AND l.loan_amount <= '.floatval($param['amount_r']);
+        }
+
+        if(isset($param['rec_person']) && $param['rec_person']!=''){
+            $where .= ' AND l.rec_person like "'.$param['rec_person'].'"';
+        }
+
+        if(isset($param['status']) && $param['status']!=0){
+            $where .= ' AND l.status = "'.$param['status'].'"';
+        }
         $data = $model->lists($where,$page);//print_r($data);
         $this->assign(
             'data',$data['data']
@@ -41,23 +64,7 @@ class Loan extends Base{
             '_page_btn_link' => url('add'),
         ));
 
-        $searchFields = array(
-                'begin_date' => array(
-                    'text'=>'开始日期',
-                    'type'=> 'greater'
-                ),
 
-                'end_date' => array(
-                    'text'=>'结束日期',
-                    'type'=> 'less'
-                ),
-                'loan_amount' => array(
-                    'text'=>'借贷资金',
-                    'type'=> 'between'
-                ),
-                'rec_person' => '推荐人'
-        );
-        $this->assign('search',$searchFields);
         return $this->fetch();
     }
 

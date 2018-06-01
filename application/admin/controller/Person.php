@@ -41,13 +41,8 @@ class Person extends Base{
             '_page_btn_name' => '添加人员',
             '_page_btn_link' => url('add'),
         ));
-        
-        $searchFields =  array(
-        'name' => '姓名',
-        'mobile' => '手机号'
-    );
 
-        $this->assign('search',$searchFields);
+
         return $this->fetch();
     }
 

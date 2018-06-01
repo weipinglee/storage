@@ -1,4 +1,35 @@
 
+<div class="searchBar" id="search">
+    <div class="col-sm-6" style="width:100%;">
+
+            <div id="DataTables_Table_0_filter" class="dataTables_filter" style="float:right">
+             <form action="" method="get">
+                 <span>姓名:</span><input type="search" name="name" v-model="fills.name" class="form-control input-sm" style="display:inline" aria-controls="DataTables_Table_0"/>
+                 <span>手机:</span><input type="search" name="mobile" v-model="fills.mobile" class="form-control input-sm" style="display:inline" aria-controls="DataTables_Table_0"/>
+
+
+                 <input type="submit"  class="btn btn-primary"  style="display:inline" aria-controls="DataTables_Table_0" value="查找"/>
+
+             </form>
+
+            </div>
+
+
+
+
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__ADMIN/js/project/searchbar.js" ></script>
+<script type="text/javascript">
+
+    searchVue.fills = {
+        'name' : searchJSON.name ? searchJSON.name : '',
+        'mobile':searchJSON.mobile ? searchJSON.mobile : '',
+    };
+
+
+</script>
 <div class="row">
     <div class="col-sm-12">
         <div class="ibox float-e-margins">

@@ -7,17 +7,20 @@
       }
   }
 ?>
-<div class="">
+<div class="" id="searchBar">
     <div class="col-sm-6" style="width:100%;">
         <form action="" method="get">
             <div id="DataTables_Table_0_filter" class="dataTables_filter" style="float:right">
 
                 {foreach name="search" item="val"}
+                   {if condition="is_array($val)"}
+
+                   {else }
                      {if condition="!isset($searchData[$key])"}
                        {assign name="$searchData[$key]" value="" /}
                      {/if}
                     <span>{$val}:</span><input type="search" name="{$key}" value="{$searchData[$key]}" class="form-control input-sm" style="display:inline" aria-controls="DataTables_Table_0"/>
-
+                   {/if}
                 {/foreach}
 
                 <input type="submit"  class="btn btn-primary" style="display:inline" aria-controls="DataTables_Table_0" value="查找"/>
@@ -30,3 +33,4 @@
     </div>
 </div>
 {/if}
+
