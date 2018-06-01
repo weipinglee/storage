@@ -41,7 +41,23 @@ class Loan extends Base{
             '_page_btn_link' => url('add'),
         ));
 
-        //$this->assign('search',$this->model->searchFields());
+        $searchFields = array(
+                'begin_date' => array(
+                    'text'=>'开始日期',
+                    'type'=> 'greater'
+                ),
+
+                'end_date' => array(
+                    'text'=>'结束日期',
+                    'type'=> 'less'
+                ),
+                'loan_amount' => array(
+                    'text'=>'借贷资金',
+                    'type'=> 'between'
+                ),
+                'rec_person' => '推荐人'
+        );
+        $this->assign('search',$searchFields);
         return $this->fetch();
     }
 

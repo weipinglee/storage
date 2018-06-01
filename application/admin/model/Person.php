@@ -56,10 +56,7 @@ class Person extends Base{
     protected $message  =   [
         'shenfenzheng.unique' => '该身份证号已存在'
     ];
-    protected $searchFields = array(
-        'name' => '姓名',
-        'mobile' => '手机号'
-    );
+
 
     public function __construct()
     {

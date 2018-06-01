@@ -56,22 +56,7 @@ class Loan extends Base{
     );
 
 
-    protected $searchFields = array(
-        'begin_date' => array(
-            'text'=>'开始日期',
-            'type'=> 'greater'
-        ),
 
-        'end_date' => array(
-            'text'=>'结束日期',
-            'type'=> 'less'
-        ),
-        'loan_amount' => array(
-            'text'=>'借贷资金',
-            'type'=> 'between'
-        ),
-        'rec_person' => '推荐人'
-    );
 
 
 

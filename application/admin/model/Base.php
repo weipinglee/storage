@@ -18,7 +18,6 @@ abstract class Base{
     protected $rules = array();//验证规则
     protected $insertRules = array();
     protected $updateRules = array();
-    protected $searchFields = array();
     protected $message = array();//验证消息
     protected $fieldType = array();//字段类型
     protected $pk = 'id';
@@ -39,10 +38,6 @@ abstract class Base{
         return $this->tableName;
     }
 
-
-    public function searchFields(){
-        return $this->searchFields;
-    }
 
     public function getPk(){
         return $this->pk;
