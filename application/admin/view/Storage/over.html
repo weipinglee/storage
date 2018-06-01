@@ -1,0 +1,248 @@
+
+<div class="row" id="app">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>结算借贷 <small></small></h5>
+
+            </div>
+            <div class="ibox-content">
+                <form method="post" action="{:url('admin/Storage/over')}" class="form-horizontal" confirm="1" auto_submit="1" redirect_url="{:url('admin/Storage/lst')}">
+
+                    <div class="hr-line-dashed"></div>
+                    <input type="hidden" name="id" v-model="loan.id" />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">借款人员：</label>
+                        <input type="hidden"  :value="selectPerson.id" />
+
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control" disabled v-model="pname"    style="width: 50%;"/>
+
+                        </div>
+
+                        <label class="col-sm-2 control-label">手        机：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" disabled class="form-control"   style="width: 50%;" :value="selectPerson.mobile"/>
+                        </div>
+
+                        <label class="col-sm-2 control-label">身份证号：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" disabled class="form-control"  style="width: 50%;" :value="selectPerson.shenfenzheng"/>
+                        </div>
+
+                        <label class="col-sm-2 control-label">开始时间：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input class=" form-control" v-model="loan.begin_date"  type="text" disabled
+                                    value="" style="width: 50%;">
+                        </div>
+
+                        <label class="col-sm-2 control-label">结束时间：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input class=" form-control"  v-model="loan.end_date"  type="text" disabled
+                                    style="width: 50%;">
+                        </div>
+
+                        <label class="col-sm-2 control-label">入仓金额：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text"  v-model="loan.amount" disabled class="form-control"  style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">入仓周期：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" v-model="loan.period" disabled class="form-control"  style="width: 50%;"/>
+                        </div>
+                        <label class="col-sm-2 control-label">支息费率：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" disabled class="form-control"  v-model="loan.rate" style="width: 50%;display:inline;" /><span>‰</span>
+                        </div>
+
+                        <label class="col-sm-2 control-label">预计支息：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text"  disabled class="form-control" v-model="loan.exp_income" style="width: 50%;" />
+                        </div>
+
+
+                        <label class="col-sm-2 control-label">结算日期：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input class=" form-control"  v-model="loan.real_end_date" v-on:blur="computeFinalIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                   name="real_end_date" value="" style="width: 50%;">
+                        </div>
+
+
+
+                        <label class="col-sm-2 control-label">最终收益：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="hidden" name="real_income" :value="loan.real_income" />
+                            <input type="text"  disabled class="form-control" v-model="loan.real_income" style="width: 50%;" />
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-danger" v-on:click="formSubmit">手动结束</button>
+                        </div>
+
+
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",})
+    });
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script type="text/javascript">
+
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            persons : [
+                {'name':'','id':'','shenfenzheng':'','mobile':''}
+            ],
+            pname : '{$data["name"]}',//搜索名称
+            selectPerson : {id:'{$data["person_id"]}',mobile:'{$data["mobile"]}',shenfenzheng:'{$data["shenfenzheng"]}',name:'{$data["name"]}'},
+            inputStart : false, //用来控制中文的输入
+
+            loan:{id:'{$data["id"]}',begin_date:'{$data["begin_date"]}',end_date:'{$data["end_date"]}',rate:'{$data["rate"]}',
+                amount:'{$data["loan_amount"]}',period:'{$data["period"]}',exp_income:'{$data["exp_income"]}',
+                rec_rate:'{$data["rec_rate"]}',exp_final_income:'{$data["exp_final_income"]}',
+                status:'{$data["status"]}',rec_person:'{$data["rec_person"]}',real_end_date:'{$data["real_end_date"]}',
+                real_income:'{$data["real_income"]}',real_final_income:'{$data["real_final_income"]}'}
+
+
+        },
+        methods: {
+            inputFocus:function(){
+                $('#person_list').css('display','block');
+            },
+            getPerson: function (id) {
+                //console.log(vue.inputStart);
+                if(vue.inputStart){
+                    $.ajax({
+                        type: "GET",
+                        url: "{:url(\"admin/Storage/personList\")}",
+                        data: {
+                            name: vue.pname
+                        },
+                        success: function (data) {
+                            data = JSON.parse(data);
+                            // console.log(JSON.stringify(data));
+                            vue.persons = [];
+                            for (var index in data){
+                                vue.persons.push(
+                                    {
+                                        name:data[index].name,
+                                        id:data[index].id,
+                                        shenfenzheng:data[index].shenfenzheng,
+                                        mobile:data[index].mobile
+                                    }
+                                );
+                            }
+
+
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+
+                    });
+                }
+
+            },
+            getPersonStart:function(){
+                vue.inputStart = false;
+            },
+
+            getPersonEnd : function(){
+                vue.inputStart = true;
+            },
+
+            selectFirstOne : function(){
+
+            },
+
+            toselectPerson : function(event){
+                this.selectPerson = {
+                    id:    event.target.getAttribute('pid'),
+                    mobile:event.target.getAttribute('mobile'),
+                    shenfenzheng:event.target.getAttribute('shenfenzheng'),
+                    name:event.target.innerHTML
+                };
+                this.pname = event.target.innerHTML;
+                $('#person_list').css('display','none');
+
+
+            },
+
+            /**
+             * 计算收益
+             */
+            computeIncome : function(){
+                // this.exp_income = 345;
+                this.loan.begin_date = $('input[name=begin_date]').val();
+                this.loan.end_date = $('input[name=end_date]').val();
+                var _this = this;
+                $.ajax({
+                    type:'GET',
+                    url :'{:url("admin/Storage/getExpIncome")}',
+                    data : this.loan,
+                    dataType : 'json',
+                    success : function(data){
+                        //console.log(JSON.stringify(data));
+                        // console.log(data.exp_income);
+                        _this.loan.exp_income = data.exp_income;
+                        _this.loan.exp_final_income = data.exp_final_income;
+                        if(data.info){
+                            layer.msg(data.info);
+                        }
+                    }
+                })
+
+            },
+            /**
+             * 计算收益
+             */
+            computeFinalIncome : function(){
+                this.loan.real_end_date = $('input[name=real_end_date]').val();
+                var _this = this;
+                $.ajax({
+                    type:'GET',
+                    url :'{:url("admin/Storage/getFinalIncome")}',
+                    data : this.loan,
+                    dataType : 'json',
+                    success : function(data){
+                        //console.log(JSON.stringify(data));
+                        // console.log(data.exp_income);
+                        _this.loan.real_income = data.income;
+                        _this.loan.real_final_income = data.final_income;
+                        if(data.info){
+                            layer.msg(data.info);
+                        }
+                    }
+                })
+
+            },
+            formSubmit : function(){
+                $('form').submit();
+            }
+
+
+        }
+    });
+
+
+
+
+</script>
+
