@@ -28,11 +28,14 @@ class Admin extends Base{
      * 返回多条数据
      * @param string $where
      */
-    public function lists($page=1,$where=''){
+    public function lists($where='',$page=1,$pagesize=10,$bind=array()){
         $query = new \extDB\DbQuery($this->tableName);
+        $whereStr = 'del=0';
         $query->page = $page;
         $query->pagesize = 10;
-        $query->where = 'del=0';
+        $whereStr .= $where!='' ? ' AND '.$where : '';
+        $query->where = $whereStr ;
+        $query->bind = $bind;
         $data = $query->find();
         $pageData = $query->getPageData();
          return array('data'=>$data,'page'=>$pageData);

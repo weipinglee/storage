@@ -29,7 +29,7 @@ class Storage extends Base{
 
         $where = '';
 
-        $data = $model->lists($page,$where);//print_r($data);
+        $data = $model->lists($where,$page);//print_r($data);
         $this->assign(
             'data',$data['data']
         );

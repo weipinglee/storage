@@ -33,7 +33,8 @@ class Index extends Base
         $this->assign('config',array('days'=>$configData['overdue_days']));
 
         //贷款超期信息
-
+        $service = \think\Loader::model('Loan','service');
+       // $service->list(1,);
         return $this->fetch('index_v1');
     }
 }

@@ -28,7 +28,7 @@ class Config extends Base{
      * 返回多条数据
      * @param string $where
      */
-    public function lists($page=1,$where=''){
+    public function lists($where='',$page=1,$pagesize=10,$bind=array()){
         return array();
     }
 

@@ -28,14 +28,17 @@ class Loan extends Base{
      * 返回多条数据
      * @param string $where
      */
-    public function lists($page=1,$where=''){
+    public function lists($where='',$page=1,$pagesize=10,$bind=array()){
         $query = new \extDB\DbQuery($this->tableName . ' as l ');
         $query->join = 'left join person as p1 on l.person_id=p1.id ';
                        // left join person as p2 on l.rec_person=p2.id ';
         $query->fields = 'l.*,p1.name ,p1.mobile,p1.shenfenzheng';
         $query->page = $page;
-        $query->pagesize = 10;
-        $query->where = 'l.del=0';
+        $query->pagesize = $pagesize;
+        $whereStr = '';
+        $whereStr .= $where!='' ? ' AND '.$where : '';
+        $query->where = $whereStr ;
+        $query->bind = $bind;
         $query->order = 'l.id desc';
         $data = $query->find();
         $pageData = $query->getPageData();

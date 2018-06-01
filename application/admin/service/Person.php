@@ -24,19 +24,16 @@ class Person extends Base{
 
     /**
      * 返回多条数据
-     * @param int $page 页码 0返回所有数据
-     * @param array $where
+     * @param int $page
+     * @param array|string $where
      */
-    public function lists($page=1,$pagesize=10,$where=''){
+    public function lists($where='',$page=1,$pagesize=10,$bind=array()){
         $query = new \extDB\DbQuery($this->tableName);
         $query->page = $page;
-        $query->pagesize = $pagesize>0 ? $pagesize : 10;
-
-        $whereStr = 'del=0';
-        if($where){
-             $whereStr .= $where;
-        }
-        $query->where = $whereStr;
+        $query->pagesize = 10;
+        $whereStr = $where;
+        $query->where = $whereStr ;
+        $query->bind = $bind;
         $data = $query->find();
 
         $pageData = $query->getPageData();

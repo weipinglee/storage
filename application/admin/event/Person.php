@@ -19,14 +19,14 @@ class Person {
 
     public function lst($page=1,$pagesize=10,$where=array()){
         $model = $this->serviceModel;
-        $whereStr = '';
+        $whereStr = 'del=0 ';
         if(isset($where['name'])){
             $whereStr .=  ' AND name like "%'.$where['name'].'%"';
         }
         if(isset($where['mobile'])){
             $whereStr .= ' AND mobile like "%'.$where['mobile'].'%"';
         }
-        $data = $model->lists($page,$pagesize,$whereStr);
+        $data = $model->lists($whereStr,$page,$pagesize);
         return $data;
     }
 

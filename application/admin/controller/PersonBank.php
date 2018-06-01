@@ -30,10 +30,10 @@ class PersonBank extends Base{
        $where = '';
        $bind = array();
        if($person_id){
-           $where .= ' AND b.person_id=:person_id';
+           $where = 'b.person_id=:person_id';
            $bind = array('person_id'=>$person_id);
        }
-        $data = $model->lists($page,$where,$bind);
+        $data = $model->lists($where,$page,10,$bind);
         $this->assign(
             'data',$data['data']
         );

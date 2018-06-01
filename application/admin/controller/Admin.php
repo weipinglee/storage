@@ -24,7 +24,7 @@ class Admin extends Base
     {
         $model = $this->serviceModel;
         $page = isset($_GET['page']) ? $_GET['page'] : 1 ;
-        $data = $model->lists($page);
+        $data = $model->lists('',$page);
         $this->assign(
             'data',$data['data']
         );

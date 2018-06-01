@@ -49,7 +49,8 @@ abstract class Base{
     abstract public function edit($id,$data);
 
 
-    abstract public function lists($page=1,$where='');
+    abstract public function lists($where='',$page=1,$pagesize=10,$bind=array());
+
 
 
 

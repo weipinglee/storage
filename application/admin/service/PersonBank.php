@@ -35,17 +35,13 @@ class PersonBank extends Base{
      * @param array $where
      * @param array $bind where条件绑定参数
      */
-    public function lists($page=1,$where='',$bind=array()){
+    public function lists($where='',$page=1,$pagesize=10,$bind=array()){
         $query = new \extDB\DbQuery($this->tableName . ' as b');
         $query->join = ' left join '.$this->personTableName.' as p on b.person_id=p.id';
         $query->fields = 'b.*,p.name,p.mobile';
         $query->page = $page;
-        $query->pagesize = 10;
-        $whereStr = 'b.del=0';
-        if($where){
-             $whereStr .= $where;
-        }
-        $query->where = $whereStr;
+        $query->pagesize = $pagesize;
+        $query->where = $where;
         $query->bind = $bind;
         $data = $query->find();
         $pageData = $query->getPageData();
