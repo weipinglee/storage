@@ -60,7 +60,18 @@ class Loan extends Base{
         $request = Request::instance();
         if($request->isPost()){
             //print_r($request->param());
-            $res = $this->serviceModel->add($request->param());
+            $data = $request->param();
+            if(isset($data['status'])){
+                switch($data['status']){
+                    case 0 : $data['status'] = '已保存';
+                    break;
+                    case 1 : $data['status'] = '已提交';
+                    break;
+                    case 2 : $data['status'] = '已结束';
+                    break;
+                }
+            }
+            $res = $this->serviceModel->add($data);
             die(json_encode($res));
         }elseif($request->isGet()){
             return $this->fetch();

@@ -69,7 +69,7 @@ class Loan {
            }
 
        }
-
+       $final_income = $final_income<0 ? 0 : $final_income;
        return array('exp_income'=>$income,'exp_final_income'=>$final_income,'info'=>'');
 
 

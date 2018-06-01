@@ -51,7 +51,6 @@ class Loan extends Base{
      * @return array
      */
     public function add($data){
-
          $this->dbObj->beginTrans();
          if($this->model->checkInsert($data,$this->errors)){//验证通过
              if($data['begin_date']==''){
