@@ -36,6 +36,7 @@ class Loan extends Base{
         $query->page = $page;
         $query->pagesize = 10;
         $query->where = 'l.del=0';
+        $query->order = 'l.id desc';
         $data = $query->find();
         $pageData = $query->getPageData();
          return array('data'=>$data,'page'=>$pageData);

@@ -16,7 +16,7 @@
                         <input type="hidden"  :value="selectPerson.id" />
 
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control"  v-model="pname"    style="width: 50%;"/>
+                            <input type="text" class="form-control" disabled v-model="pname"    style="width: 50%;"/>
 
                         </div>
 
@@ -63,12 +63,12 @@
 
                         <label class="col-sm-2 control-label">推荐人：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text"  v-model="loan.rec_person" class="form-control"  style="width: 50%;" />
+                            <input type="text"  v-model="loan.rec_person" disabled class="form-control"  style="width: 50%;" />
                         </div>
 
                         <label class="col-sm-2 control-label">推荐人分成：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text"  v-model="loan.rec_rate"  class="form-control"  style="width: 50%;display:inline;" /><span>%</span>
+                            <input type="text"  v-model="loan.rec_rate" disabled class="form-control"  style="width: 50%;display:inline;" /><span>%</span>
                         </div>
 
                         <label class="col-sm-2 control-label">预期收益-分成：</label>
