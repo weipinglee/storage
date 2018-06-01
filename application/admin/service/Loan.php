@@ -30,9 +30,9 @@ class Loan extends Base{
      */
     public function lists($page=1,$where=''){
         $query = new \extDB\DbQuery($this->tableName . ' as l ');
-        $query->join = 'left join person as p1 on l.person_id=p1.id 
-                        left join person as p2 on l.rec_person=p2.id ';
-        $query->fields = 'l.*,p1.name ,p1.mobile,p2.name as rec_person_name';
+        $query->join = 'left join person as p1 on l.person_id=p1.id ';
+                       // left join person as p2 on l.rec_person=p2.id ';
+        $query->fields = 'l.*,p1.name ,p1.mobile,p1.shenfenzheng';
         $query->page = $page;
         $query->pagesize = 10;
         $query->where = 'l.del=0';
@@ -42,7 +42,17 @@ class Loan extends Base{
     }
 
     public function row($id){
-         return $this->dbObj->where(array('id'=>$id))->getObj();
+        $id=intval($id);
+        if($id<=0){
+            return false;
+        }
+        $query = new \extDB\DbQuery($this->tableName . ' as l ');
+        $query->join = 'left join person as p1 on l.person_id=p1.id ';
+                       // left join person as p2 on l.rec_person=p2.id ';
+        $query->fields = 'l.*,p1.id as person_id,p1.name ,p1.mobile,p1.shenfenzheng';
+         $query->where = 'l.id=:id';
+         $query->bind = array('id'=>$id);
+         return $query->getObj();
     }
 
     /**
@@ -104,12 +114,18 @@ class Loan extends Base{
      */
     public function edit($id,$data){
         if(intval($id)<=0){
-            $this->errors = '管理员不存在';
+            $this->errors = '该贷款存在';
         }
         $id = intval($id);
+        if($this->model->checkUpdate($data,$this->errors)) {//验证通过
+            $this->dbObj->where(array('id' => $id))->data($data)->update();
+            return $this->getSuccInfo();
+        }
 
-         $this->dbObj->where(array('id'=>$id))->data($data)->update();
-        return $this->getSuccInfo();
+        if($this->errors){
+            $this->dbObj->rollBack();
+            return $this->getSuccInfo(0,$this->errors);
+        }
 
     }
 

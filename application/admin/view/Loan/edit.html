@@ -1,115 +1,110 @@
-<layout name="layout"/>
-<div class="row">
+
+<div class="row" id="app">
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>修改人员资料 <small></small></h5>
+                <h5>修改借贷 <small></small></h5>
 
             </div>
             <div class="ibox-content">
-                <form method="post" action="{:url('admin/Person/edit')}" class="form-horizontal" auto_submit="1" redirect_url="{:url('admin/Person/lst')}">
-                     <input type="hidden" name="id" value="{$data['id']}" />
-                    <div class="hr-line-dashed"></div>
+                <form method="post" action="{:url('admin/Loan/edit')}" class="form-horizontal" auto_submit="1" redirect_url="{:url('admin/Loan/lst')}">
 
+                    <div class="hr-line-dashed"></div>
+                    <input type="hidden" name="id" v-model="loan.id" />
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">姓       名：</label>
+                        <label class="col-sm-2 control-label">选择人员：</label>
+                        <input type="hidden" name="person_id" :value="selectPerson.id" datatype="*"/>
+                        <input type="hidden" name="status" :value="loan.status" />
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" value="{$data['name']}" name="name" style="width: 50%;" nullmsg="请填写姓名" datatype="*"/>
+                            <input type="text" class="form-control"  v-on:blur="selectFirstOne" v-on:focus="inputFocus" v-on:compositionstart="getPersonStart"
+                                   v-on:compositionend="getPersonEnd" v-on:input="getPerson"
+                                   v-model="pname"   list="personList" style="width: 50%;"/>
+                            <div id="person_list" style="position:absolute;z-index:999;background-color: white;width:50%;">
+                                <p v-for="person in persons" :pid="person.id" :mobile="person.mobile" :shenfenzheng="person.shenfenzheng" v-on:click="toselectPerson($event)">{{person.name}}</p>
+
+                            </div>
+
+
 
                         </div>
 
                         <label class="col-sm-2 control-label">手        机：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="mobile" value="{$data['mobile']}" datatype="mobile" style="width: 50%;" />
-                        </div>
-
-                        <label class="col-sm-2 control-label">性        别：</label>
-                        <div class="col-sm-10 my-margin">
-                            <select class="form-control" name="sex" style="width: 50%;">
-                                <option value="男" {if condition="$data['sex'] eq '男'"}selected="true"{/if}>男</option>
-                                <option value="女" {if condition="$data['sex'] eq '女'"}selected="true"{/if}>女</option>
-                            </select>
-                        </div>
-
-                        <label class="col-sm-2 control-label">名族：</label>
-                        <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" value="{$data['zu']}" name="zu"  style="width: 50%;" />
-                        </div>
-                        <label class="col-sm-2 control-label">籍贯：</label>
-                        <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="place" value="{$data['place']}" style="width: 50%;" />
-                        </div>
-                        <label class="col-sm-2 control-label">生日：</label>
-                        <div class="col-sm-10 my-margin" >
-                            <input class=" form-control"   type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
-                                   name="birth" value="{$data['birth']}" style="width: 50%;">
-
-                        </div>
-
-                        <label class="col-sm-2 control-label">工作年限：</label>
-                        <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="work_years" value="{$data['work_years']}" style="width: 50%;" />
+                            <input type="text" disabled class="form-control"   style="width: 50%;" :value="selectPerson.mobile"/>
                         </div>
 
                         <label class="col-sm-2 control-label">身份证号：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="shenfenzheng" value="{$data['shenfenzheng']}" style="width: 50%;" />
+                            <input type="text" disabled class="form-control"  style="width: 50%;" :value="selectPerson.shenfenzheng"/>
                         </div>
 
-                        <label class="col-sm-2 control-label">学历：</label>
+                        <label class="col-sm-2 control-label">开始时间：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="edu" value="{$data['edu']}" style="width: 50%;" />
+                            <input class=" form-control" v-model="loan.begin_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})"
+                                   name="begin_date" value="" style="width: 50%;">
                         </div>
 
-                        <label class="col-sm-2 control-label">毕业院校：</label>
+                        <label class="col-sm-2 control-label">结束时间：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="biye" value="{$data['biye']}"  style="width: 50%;" />
+                            <input class=" form-control"  v-model="loan.end_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                   name="end_date" value="" style="width: 50%;">
                         </div>
 
-                        <label class="col-sm-2 control-label">邮箱：</label>
+                        <label class="col-sm-2 control-label">贷款金额：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="email" value="{$data['email']}" datatype="e" ignore="ignore" style="width: 50%;" />
+                            <input type="text" name="loan_amount" v-model="loan.amount" v-on:blur="computeIncome" class="form-control"  style="width: 50%;" />
                         </div>
 
-                        <label class="col-sm-2 control-label">婚姻状况：</label>
+                        <label class="col-sm-2 control-label">借贷周期：</label>
                         <div class="col-sm-10 my-margin">
-                            <select class="form-control" name="is_marry" style="width: 50%;">
-                                <option value="未婚" {if condition="$data['sex'] eq '未婚'"}selected="true"{/if}>未婚</option>
-                                <option value="已婚" {if condition="$data['sex'] eq '已婚'"}selected="true"{/if}>已婚</option>
+                            <select class="form-control" name="period" v-model="loan.period" v-on:change="computeIncome" style="width: 50%;">
+                                <option value="日">日</option>
+                                <option value="月">月</option>
+                                <option value="年">年</option>
                             </select>
                         </div>
-
-
-                        <label class="col-sm-2 control-label">配偶姓名：</label>
+                        <label class="col-sm-2 control-label">借贷费率：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="mate_name" value="{$data['mate_name']}" style="width: 50%;" />
+                            <input type="text" name="rate" class="form-control" v-on:blur="computeIncome" v-model="loan.rate" style="width: 50%;display:inline;" /><span>‰</span>
                         </div>
 
-                        <label class="col-sm-2 control-label">电话：</label>
+                        <label class="col-sm-2 control-label">预期收益：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="mate_phone" datatype="mobile" value="{$data['mate_phone']}" ignore="ignore" style="width: 50%;" />
+                            <input type="hidden" name="exp_income"  v-model="loan.exp_income"  />
+                            <input type="text" name="exp_income" disabled class="form-control" v-model="loan.exp_income" style="width: 50%;" />
                         </div>
 
-                        <label class="col-sm-2 control-label">紧急联系人：</label>
+                        <label class="col-sm-2 control-label">推荐人：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="emeg_cont_name" value="{$data['emeg_cont_name']}" style="width: 50%;" />
+                            <input type="text" name="rec_person" v-model="loan.rec_person" class="form-control"  style="width: 50%;" />
                         </div>
 
-                        <label class="col-sm-2 control-label">紧急联系电话：</label>
+                        <label class="col-sm-2 control-label">推荐人分成：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" class="form-control" name="emeg_cont_phone" value="{$data['emeg_cont_phone']}" ignore="ignore" datatype="mobile" style="width: 50%;" />
+                            <input type="text" name="rec_rate" v-model="loan.rec_rate" v-on:blur="computeIncome" class="form-control"  style="width: 50%;display:inline;" /><span>%</span>
                         </div>
 
+                        <label class="col-sm-2 control-label">最终预期收益：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="hidden" name="exp_final_income"  v-model="loan.exp_final_income"  />
+
+                            <input type="text"  disabled v-model="loan.exp_final_income" class="form-control"  style="width: 50%;" />
+                        </div>
 
                     </div>
 
                     <div class="hr-line-dashed"></div>
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-2">
-                            <button class="btn btn-primary" type="submit">保存</button>
-                        </div>
-                    </div>
+
                 </form>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button class="btn btn-primary" v-on:click="formSubmit(0)">保存</button>
+
+                        <button class="btn btn-danger" v-on:click="formSubmit(1)">提交</button>
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </div>
@@ -121,4 +116,134 @@
     });
 </script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script type="text/javascript">
+
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            persons : [
+                {'name':'','id':'','shenfenzheng':'','mobile':''}
+            ],
+            pname : '{$data["name"]}',//搜索名称
+            selectPerson : {id:'{$data["person_id"]}',mobile:'{$data["mobile"]}',shenfenzheng:'{$data["shenfenzheng"]}',name:'{$data["name"]}'},
+            inputStart : false, //用来控制中文的输入
+
+            loan:{id:'{$data["id"]}',begin_date:'{$data["begin_date"]}',end_date:'{$data["end_date"]}',rate:'{$data["rate"]}',
+                amount:'{$data["loan_amount"]}',period:'{$data["period"]}',exp_income:'{$data["exp_income"]}',
+                rec_rate:'{$data["rec_rate"]}',exp_final_income:'{$data["exp_final_income"]}',
+                status:'{$data["status"]}',rec_person:'{$data["rec_person"]}'}
+
+
+        },
+        methods: {
+            inputFocus:function(){
+                $('#person_list').css('display','block');
+            },
+            getPerson: function (id) {
+                //console.log(vue.inputStart);
+                if(vue.inputStart){
+                    $.ajax({
+                        type: "GET",
+                        url: "{:url(\"admin/Loan/personList\")}",
+                        data: {
+                            name: vue.pname
+                        },
+                        success: function (data) {
+                            data = JSON.parse(data);
+                            // console.log(JSON.stringify(data));
+                            vue.persons = [];
+                            for (var index in data){
+                                vue.persons.push(
+                                    {
+                                        name:data[index].name,
+                                        id:data[index].id,
+                                        shenfenzheng:data[index].shenfenzheng,
+                                        mobile:data[index].mobile
+                                    }
+                                );
+                            }
+
+
+                        },
+                        error: function () {
+                            alert("错误");
+                        }
+
+                    });
+                }
+
+            },
+            getPersonStart:function(){
+                vue.inputStart = false;
+            },
+
+            getPersonEnd : function(){
+                vue.inputStart = true;
+            },
+
+            selectFirstOne : function(){
+
+            },
+
+            toselectPerson : function(event){
+                this.selectPerson = {
+                    id:    event.target.getAttribute('pid'),
+                    mobile:event.target.getAttribute('mobile'),
+                    shenfenzheng:event.target.getAttribute('shenfenzheng'),
+                    name:event.target.innerHTML
+                };
+                this.pname = event.target.innerHTML;
+                $('#person_list').css('display','none');
+
+
+            },
+
+            /**
+             * 计算收益
+             */
+            computeIncome : function(){
+                // this.exp_income = 345;
+                this.loan.begin_date = $('input[name=begin_date]').val();
+                this.loan.end_date = $('input[name=end_date]').val();
+                var _this = this;
+                $.ajax({
+                    type:'GET',
+                    url :'{:url("admin/Loan/getExpIncome")}',
+                    data : this.loan,
+                    dataType : 'json',
+                    success : function(data){
+                        //console.log(JSON.stringify(data));
+                        // console.log(data.exp_income);
+                        _this.loan.exp_income = data.exp_income;
+                        _this.loan.exp_final_income = data.exp_final_income;
+                        if(data.info){
+                            layer.msg(data.info);
+                        }
+                    }
+                })
+
+            },
+            formSubmit : function(status){
+                if(status===0){
+                    this.loan.status=0;
+                }else{
+                    this.loan.status=1;
+                }
+                //
+                //this.loan.status设置input的值在vue流程的后面，在下一句form.submit()执行时不会改变，所以用jquery设置他的值
+                $('input[name=status]').val(this.loan.status);
+                $('form').submit();
+            }
+
+
+        }
+    });
+
+
+
+
+</script>
 

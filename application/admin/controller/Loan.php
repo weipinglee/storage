@@ -29,7 +29,7 @@ class Loan extends Base{
 
         $where = '';
 
-        $data = $model->lists($page,$where);print_r($data);
+        $data = $model->lists($page,$where);//print_r($data);
         $this->assign(
             'data',$data['data']
         );
@@ -85,6 +85,17 @@ class Loan extends Base{
         if($request->isPost()){
             $id = $request->param('id');
             $data = $request->param();
+            if(isset($data['status'])){
+                switch($data['status']){
+                    case 0 : $data['status'] = '已保存';
+                        break;
+                    case 1 : $data['status'] = '已提交';
+                        break;
+                    case 2 : $data['status'] = '已结束';
+                        break;
+                }
+            }
+            unset($data['id']);
             $res = $this->serviceModel->edit($id,$data);
             die(json_encode($res));
         }elseif($request->isGet()){

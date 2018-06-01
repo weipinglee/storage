@@ -98,6 +98,8 @@ abstract class Base{
     public function checkUpdate(&$data,&$error){
         if($this->validateObj->check($data,array_merge_recursive($this->updateRules,$this->rules))){
             $this->typeTrans($data);
+            if(isset($data[$this->getPk()]))
+                unset($data[$this->getPk()]);
             return true;
         }
         $error = $this->validateObj->getError();
