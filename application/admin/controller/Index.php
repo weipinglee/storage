@@ -34,7 +34,20 @@ class Index extends Base
 
         //贷款超期信息
         $service = \think\Loader::model('Loan','service');
-       // $service->list(1,);
+        $where = 'l.del=0 and  status="已提交" and ADDDATE(now(),'.$configData['overdue_days'].') > l.end_date ';
+        $loanList = $service->lists($where,1,1000);
+
+        $service = \think\Loader::model('Storage','service');
+        $where = 'l.del=0 and  status="已提交" and ADDDATE(now(),'.$configData['overdue_days'].') > l.end_date ';
+        $storageList = $service->lists($where,1,1000);
+
+        $this->assign('loanList',$loanList['data']);
+        $this->assign('storageList',$storageList['data']);
+
+
+
+
+
         return $this->fetch('index_v1');
     }
 }

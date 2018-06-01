@@ -32,7 +32,7 @@ class Storage extends Base{
         $query = new \extDB\DbQuery($this->tableName . ' as l ');
         $query->join = 'left join person as p1 on l.person_id=p1.id ';
                        // left join person as p2 on l.rec_person=p2.id ';
-        $query->fields = 'l.*,p1.name ,p1.mobile,p1.shenfenzheng';
+        $query->fields = 'l.*,p1.name ,p1.mobile,p1.shenfenzheng,DATEDIFF(now(),l.end_date) as diff';
         $query->page = $page;
         $query->pagesize = $pagesize;
         $query->where = $where;

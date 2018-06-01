@@ -27,7 +27,7 @@ class Storage extends Base{
         $model = $this->serviceModel;
         $page = isset($_GET['page']) ? $_GET['page'] : 1 ;
 
-        $where = '';
+        $where = 'l.del=0';
 
         $data = $model->lists($where,$page);//print_r($data);
         $this->assign(
