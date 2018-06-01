@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\Controller;
 
+use \think\Loader;
 class Index extends Base
 {
 
@@ -25,6 +26,14 @@ class Index extends Base
     }
 
     public function index_v1(){
+
+        //配置信息
+        $configModel = Loader::model('Config','service');
+        $configData = $configModel->row(1);
+        $this->assign('config',array('days'=>$configData['overdue_days']));
+
+        //贷款超期信息
+
         return $this->fetch('index_v1');
     }
 }

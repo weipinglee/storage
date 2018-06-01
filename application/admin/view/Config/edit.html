@@ -3,18 +3,16 @@
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>修改管理员密码 <small></small></h5>
-                <h5><small style="color: red">非管理人员，请不要操作此页！</small></h5>
+                <h5>修改配置 <small></small></h5>
+                <h5><small style="color: red"></small></h5>
             </div>
             <div class="ibox-content">
-                <form method="post" class="form-horizontal" action="{:url('admin/Admin/edit')}" auto_submit="1" redirect_url="{:url('admin/Admin/lst')}">
-                    <input type="hidden"  name="id" value="<?php echo $data['id']; ?>" />
-                    <input type="hidden"  name="adminname" style="width: 50%;" value="<?php echo $data['adminname']; ?>" />
+                <form method="post" class="form-horizontal" action="{:url('admin/Config/edit')}" auto_submit="1" redirect_url="{:url('admin/index/index_v1')}">
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                        <label class="col-sm-2 control-label">提醒提前天数：</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" datatype="/^\S{6,15}$/" name="password" style="width: 50%;" />
+                            <input type="text" class="form-control" datatype="n" name="days" value="{$data['overdue_days']}" style="width: 50%;" />
                         </div>
                     </div>
 
