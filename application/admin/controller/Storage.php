@@ -43,7 +43,7 @@ class Storage extends Base{
         if(isset($param['amount_r']) && floatval($param['amount_r'])>0){
             $where .= ' AND l.loan_amount <= '.floatval($param['amount_r']);
         }
-        
+
         if(isset($param['status']) && $param['status']!=0){
             $where .= ' AND l.status = "'.$param['status'].'"';
         }
