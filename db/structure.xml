@@ -1,0 +1,305 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Administrator (generated)" id="1528075926195-1">
+        <createTable tableName="st_admin">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="adminname" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="password" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="del" remarks="1:删除" type="TINYINT(3)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-2">
+        <createTable tableName="st_admin_role">
+            <column name="admin_id" remarks="管理员id" type="MEDIUMINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" remarks="角色id" type="MEDIUMINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-3">
+        <createTable tableName="st_config">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="1" name="overdue_days" remarks="超期提醒天数" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-4">
+        <createTable tableName="st_loan">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="person_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="begin_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column defaultValueNumeric="0.00" name="exp_income" remarks="预计收益" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="loan_amount" remarks="借贷金额" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period" type="ENUM('年', '月', '日')">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="rate" type="DECIMAL(5, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="rec_person" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="rec_rate" type="DECIMAL(5, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="exp_final_income" remarks="最终收益，预期收益减去推荐人获利" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="del" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="real_end_date" remarks="实际结束时间" type="date"/>
+            <column defaultValueNumeric="0.00" name="real_final_income" remarks="实际最终收益，实际收益减去推荐人获利" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="real_income" remarks="实际收益" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manual_over_time" remarks="手动结束时间" type="datetime"/>
+            <column name="status" type="ENUM('已结束', '已提交', '已保存')">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-5">
+        <createTable tableName="st_person">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" remarks="姓名" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mobile" remarks="电话" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sex" remarks="性别" type="ENUM('女', '男')">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="zu" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="birth" remarks="生日" type="VARCHAR(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="work_years" remarks="工作年限" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="shenfenzheng" remarks="身份证号" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="email" remarks="email" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_marry" remarks="、" type="ENUM('已婚', '离异', '未婚')">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="mate_name" remarks="配偶姓名" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="mate_phone" remarks="配偶电话" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="emeg_cont_phone" remarks="紧急联系电话" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="emeg_cont_name" remarks="紧急联系人" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="edu" remarks="学历" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="biye" remarks="毕业院校" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="del" remarks="1:删除" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="place" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-6">
+        <createTable tableName="st_person_bank">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="person_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="bank_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="bank_acc" remarks="银行账号" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="del" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-7">
+        <createTable tableName="st_privilege">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="pri_name" remarks="权限名称" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="module_name" remarks="权限名称" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="controller" remarks="控制器名称" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="action_name" remarks="方法名称" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="parent_id" remarks="父类Id" type="INT UNSIGNED"/>
+            <column defaultValueNumeric="1" name="status" remarks="0不可用" type="TINYINT(3)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-8">
+        <createTable tableName="st_role">
+            <column autoIncrement="true" name="id" remarks="Id" type="MEDIUMINT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="role_name" remarks="角色名称" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-9">
+        <createTable tableName="st_role_pri">
+            <column name="pri_id" remarks="权限id" type="MEDIUMINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" remarks="角色id" type="MEDIUMINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-10">
+        <createTable tableName="st_storage">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="person_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="begin_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column defaultValueNumeric="0.00" name="exp_income" remarks="预计收益" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="loan_amount" remarks="借贷金额" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period" type="ENUM('年', '月', '日')">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="rate" type="DECIMAL(5, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="rec_person" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="rec_rate" type="DECIMAL(5, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="exp_final_income" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="del" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="real_end_date" remarks="实际结束时间" type="date"/>
+            <column defaultValueNumeric="0.00" name="real_final_income" remarks="实际最终收益" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="real_income" remarks="实际收益" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manual_over_time" remarks="手动结束时间" type="datetime"/>
+            <column name="status" type="ENUM('已结束', '已提交', '已保存')">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-11">
+        <createTable tableName="st_test">
+            <column autoIncrement="true" name="id" type="MEDIUMINT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="in_out_code" remarks="出入库单号" type="TEXT"/>
+            <column name="test_code" remarks="质检单号" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mer_id" remarks="商户id" type="MEDIUMINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pro_id" remarks="产品id" type="MEDIUMINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="test_type" remarks="质检类型：0：入库；1：出库" type="TINYINT(3) UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="add_time" remarks="质检时间" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="request_status" remarks="质检申请状态：0：未处理；1：已处理；-1：用户取消" type="TINYINT(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="test_staff" remarks="质检人员" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="over_time" remarks="修改时间" type="VARCHAR(30)"/>
+            <column defaultValueNumeric="0" name="is_test" remarks="是否质检：0，质检中；1，已质检" type="TINYINT(3) UNSIGNED"/>
+            <column name="level_id" remarks="质检结果，产品等级id" type="TINYINT(3) UNSIGNED"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-12">
+        <createIndex indexName="admin_id" tableName="st_admin_role">
+            <column name="admin_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-13">
+        <createIndex indexName="pri_id" tableName="st_role_pri">
+            <column name="pri_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-14">
+        <createIndex indexName="role_id" tableName="st_admin_role">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528075926195-15">
+        <createIndex indexName="role_id" tableName="st_role_pri">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

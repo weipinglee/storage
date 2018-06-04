@@ -1,0 +1,253 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Administrator (generated)" id="1528076756265-1">
+        <insert tableName="st_admin">
+            <column name="id" valueNumeric="1"/>
+            <column name="adminname" value="admin"/>
+            <column name="password" value="e10adc3949ba59abbe56e057f20f883e"/>
+            <column name="del" valueNumeric="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528076756265-2">
+        <insert tableName="st_config">
+            <column name="id" valueNumeric="1"/>
+            <column name="overdue_days" valueNumeric="30"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1528076756265-3">
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="1"/>
+            <column name="pri_name" value="权限管理"/>
+            <column name="module_name" value=""/>
+            <column name="controller" value=""/>
+            <column name="action_name" value=""/>
+            <column name="parent_id" valueNumeric="0"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="2"/>
+            <column name="pri_name" value="权限列表"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Privilege"/>
+            <column name="action_name" value="lst"/>
+            <column name="parent_id" valueNumeric="1"/>
+            <column name="status" valueNumeric="0"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="3"/>
+            <column name="pri_name" value="添加权限"/>
+            <column name="module_name" value="Privilege"/>
+            <column name="controller" value="Admin"/>
+            <column name="action_name" value="add"/>
+            <column name="parent_id" valueNumeric="2"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="4"/>
+            <column name="pri_name" value="修改权限"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Privilege"/>
+            <column name="action_name" value="edit"/>
+            <column name="parent_id" valueNumeric="2"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="5"/>
+            <column name="pri_name" value="删除权限"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Privilege"/>
+            <column name="action_name" value="delete"/>
+            <column name="parent_id" valueNumeric="2"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="6"/>
+            <column name="pri_name" value="角色列表"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Role"/>
+            <column name="action_name" value="lst"/>
+            <column name="parent_id" valueNumeric="1"/>
+            <column name="status" valueNumeric="0"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="7"/>
+            <column name="pri_name" value="添加角色"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Role"/>
+            <column name="action_name" value="add"/>
+            <column name="parent_id" valueNumeric="6"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="8"/>
+            <column name="pri_name" value="修改角色"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Role"/>
+            <column name="action_name" value="edit"/>
+            <column name="parent_id" valueNumeric="6"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="9"/>
+            <column name="pri_name" value="删除角色"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Role"/>
+            <column name="action_name" value="delete"/>
+            <column name="parent_id" valueNumeric="6"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="10"/>
+            <column name="pri_name" value="管理员列表"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Admin"/>
+            <column name="action_name" value="lst"/>
+            <column name="parent_id" valueNumeric="1"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="11"/>
+            <column name="pri_name" value="添加管理员"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Admin"/>
+            <column name="action_name" value="add"/>
+            <column name="parent_id" valueNumeric="10"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="12"/>
+            <column name="pri_name" value="修改管理员"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Admin"/>
+            <column name="action_name" value="edit"/>
+            <column name="parent_id" valueNumeric="10"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="13"/>
+            <column name="pri_name" value="删除管理员"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Admin"/>
+            <column name="action_name" value="delete"/>
+            <column name="parent_id" valueNumeric="10"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="20"/>
+            <column name="pri_name" value="人员管理"/>
+            <column name="module_name" value=""/>
+            <column name="controller" value=""/>
+            <column name="action_name" value=""/>
+            <column name="parent_id" valueNumeric="0"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="114"/>
+            <column name="pri_name" value="人员列表"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Person"/>
+            <column name="action_name" value="lst"/>
+            <column name="parent_id" valueNumeric="20"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="115"/>
+            <column name="pri_name" value="人员添加"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Person"/>
+            <column name="action_name" value="add"/>
+            <column name="parent_id" valueNumeric="114"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="116"/>
+            <column name="pri_name" value="人员删除"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Person"/>
+            <column name="action_name" value="delete"/>
+            <column name="parent_id" valueNumeric="114"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="117"/>
+            <column name="pri_name" value="人员编辑"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Person"/>
+            <column name="action_name" value="edit"/>
+            <column name="parent_id" valueNumeric="114"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="118"/>
+            <column name="pri_name" value="借贷列表"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Loan"/>
+            <column name="action_name" value="lst"/>
+            <column name="parent_id" valueNumeric="20"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="119"/>
+            <column name="pri_name" value="借贷添加"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Loan"/>
+            <column name="action_name" value="add"/>
+            <column name="parent_id" valueNumeric="118"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="120"/>
+            <column name="pri_name" value="借贷编辑"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Loan"/>
+            <column name="action_name" value="edit"/>
+            <column name="parent_id" valueNumeric="118"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="121"/>
+            <column name="pri_name" value="入仓列表"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Storage"/>
+            <column name="action_name" value="lst"/>
+            <column name="parent_id" valueNumeric="20"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="122"/>
+            <column name="pri_name" value="入仓添加"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Storage"/>
+            <column name="action_name" value="add"/>
+            <column name="parent_id" valueNumeric="121"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="123"/>
+            <column name="pri_name" value="入仓编辑"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Storage"/>
+            <column name="action_name" value="edit"/>
+            <column name="parent_id" valueNumeric="121"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="124"/>
+            <column name="pri_name" value="入仓删除"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Storage"/>
+            <column name="action_name" value="delete"/>
+            <column name="parent_id" valueNumeric="121"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="st_privilege">
+            <column name="id" valueNumeric="125"/>
+            <column name="pri_name" value="借贷删除"/>
+            <column name="module_name" value="Admin"/>
+            <column name="controller" value="Loan"/>
+            <column name="action_name" value="delete"/>
+            <column name="parent_id" valueNumeric="118"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
