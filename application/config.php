@@ -142,8 +142,8 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'       => [
-        '__PUBLIC__'=>'/tp5/public/static/',
-        '__ADMIN__' => '/tp5/public/admin',
+        '__PUBLIC__'=>'/fund/public/static/',
+        '__ADMIN__' => '/fund/public/admin',
         '__ROOT__' => $_SERVER['DOCUMENT_ROOT'],
     ],
     // 默认跳转页面对应的模板文件
