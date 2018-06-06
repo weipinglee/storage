@@ -310,4 +310,12 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet author="weipinglee" id="2018060602" >
+        <addColumn tableName="st_loan">
+            <column name="rec_person_id" type="int(30)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
