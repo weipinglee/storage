@@ -21,11 +21,13 @@ class Person {
         $model = $this->serviceModel;
         $whereStr = 'del=0 ';
         if(isset($where['name'])){
-            $whereStr .=  ' AND name like "%'.$where['name'].'%"';
+
+            $whereStr .=  ' AND (pinyin like "'.$where['name'].'%" || name like "'.$where['name'].'%")';
         }
         if(isset($where['mobile'])){
-            $whereStr .= ' AND mobile like "%'.$where['mobile'].'%"';
+            $whereStr .= ' AND mobile like "'.$where['mobile'].'%"';
         }
+
         $data = $model->lists($whereStr,$page,$pagesize);
         return $data;
     }

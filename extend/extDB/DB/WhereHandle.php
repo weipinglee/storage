@@ -27,9 +27,33 @@ class WhereHandle
             $whereStr = ' ';
             foreach($where as $key=>$val){
                 if(is_string($val)){
-                    $whereStr .= $val.' AND ';
-                }elseif(is_array($val) && isset($val[0]) && isset($val[1])){     //比如where为：array($key=>array('eq',3))
-                    $whereStr .= call_user_func(array($this,$val[0]),$key,$val[1]). ' AND ';
+                    $whereStr .= call_user_func(array($this,'eq'),$key,$val). ' AND ';
+                }elseif(is_array($val)){     //比如where为：array($key=>array('eq',3))
+                    $action = '';
+                    $value = '';
+                    foreach($val as $k=>$oper){
+                        if(is_array($oper) && isset($oper[0]) && isset($oper[1])){
+                           $action = $oper[0];
+                           $value = $oper[1];
+                        }
+                        elseif(is_string($oper)){
+                            if($action=='')
+                                $action = $oper;
+                            else{
+                                $value = $oper;
+                            }
+
+
+                        }
+                        if($action && $value!== ''){
+                            $whereStr .= call_user_func(array($this,$action),$key,$value). ' AND ';
+                            $action='';
+                            unset($value);
+                        }
+
+                    }
+
+
                 }
             }
             $whereStr = substr($whereStr,0,-4);
@@ -92,11 +116,27 @@ class WhereHandle
     }
 
     protected function in($key,$value){
-        return  $key . ' in ('.$value.') ';
+        $mark = str_replace('.','_',$key);
+        $in = '';
+        $value = explode(',',$value);
+        foreach($value as $k=>$v){
+            $this->bind[$mark.'_'.$k] = $v;
+            $in .= $in=='' ? ':'.$mark.'_'.$k : ',:'.$mark.'_'.$k;
+        }
+        return  $key . ' in ('.$in.') ';
+
+
     }
 
     protected function notin($key,$value){
-        return  $key . ' not in ('.$value.') ';
+        $mark = str_replace('.','_',$key);
+        $in = '';
+        $value = explode(',',$value);
+        foreach($value as $k=>$v){
+            $this->bind[$mark.'_'.$k] = $v;
+            $in .= $in=='' ? ':'.$mark.'_'.$k : ',:'.$mark.'_'.$k;
+        }
+        return  $key . ' not in ('.$in.') ';
     }
 
 

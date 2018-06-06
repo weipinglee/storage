@@ -26,7 +26,6 @@ class Index extends Base
     }
 
     public function index_v1(){
-
         //配置信息
         $configModel = Loader::model('Config','service');
         $configData = $configModel->row(1);

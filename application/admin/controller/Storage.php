@@ -26,28 +26,35 @@ class Storage extends Base{
         $request = Request::instance();
         $model = $this->serviceModel;
         $page = isset($_GET['page']) ? $_GET['page'] : 1 ;
-
-        $where = 'l.del=0';
+        $event  = \think\loader::controller('Storage','event');
+        $where['del'] = 0;
         $param = $request->param();
         if(isset($param['end_date_l'])){
-            $where .= ' AND l.end_date >= "'.$param['end_date_l'].'"';
+            $where['end_date_l'] = $param['end_date_l'];
         }
-        if(isset($param['begin_date_r'])){
-            $where .= ' AND l.end_date <= "'.$param['begin_date_r'].'"';
-        }
-
-        if(isset($param['amount_l']) && floatval($param['amount_l'])>0){
-            $where .= ' AND l.loan_amount >= '.floatval($param['amount_l']);
+        if(isset($param['end_date_r'])){
+            $where['end_date_r'] = $param['end_date_r'];
         }
 
-        if(isset($param['amount_r']) && floatval($param['amount_r'])>0){
-            $where .= ' AND l.loan_amount <= '.floatval($param['amount_r']);
+        if(isset($param['amount_l'])){
+            $where['loan_amount_l'] = $param['amount_l'];
         }
 
-        if(isset($param['status']) && $param['status']!=0){
-            $where .= ' AND l.status = "'.$param['status'].'"';
+        if(isset($param['amount_r'])){
+            $where['loan_amount_r'] = $param['amount_r'];
         }
-        $data = $model->lists($where,$page);//print_r($data);
+
+        if(isset($param['status'])){
+            switch($param['status']){
+                case 'over' :
+                    $where['status'] = '已结束';
+                    break;
+                case 'unover' :
+                    $where['status'] = array('in','已保存,已提交');
+            }
+        }
+
+        $data = $event->lst($where,$page);//print_r($data);
         $this->assign(
             'data',$data['data']
         );

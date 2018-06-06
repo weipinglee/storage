@@ -302,4 +302,12 @@
             <column name="role_id"/>
         </createIndex>
     </changeSet>
+
+    <changeSet author="weipinglee" id="2018060601" >
+        <addColumn tableName="st_person">
+            <column name="pinyin" type="varchar(30)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

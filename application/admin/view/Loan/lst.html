@@ -82,14 +82,14 @@
                         <td>{$v['rate']}</td>
                         <td>{$v['exp_income']}</td>
                         <td>
-                            {if condition="$v['status']=='已提交'"}
+
                             {if condition="$v['diff']>0"}
                             <span style="color:red;">已超期
                             {$v['diff']}天</span>
                             {else}
                             还剩<?php echo -$v['diff'];?>天
                             {/if}
-                            {/if}
+
                         </td>
                         <td>{$v['status']}</td>
                         <td align="center">

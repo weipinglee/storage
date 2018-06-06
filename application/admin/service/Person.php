@@ -9,6 +9,7 @@
 namespace app\admin\service;
 
 use \extDB\DbModel;
+use Overtrue\Pinyin\Pinyin;
 class Person extends Base{
 
 
@@ -58,6 +59,7 @@ class Person extends Base{
              $this->dbObj->beginTrans();
 
              if($this->model->checkInsert($data,$this->errors)) {//验证通过
+                 $data['pinyin'] = $this->getPinyin($data['name']);
                  $num = $this->dbObj->data($data)->add();
 
                  if ($num > 0) {
@@ -76,6 +78,16 @@ class Person extends Base{
              return $this->getSuccInfo(0,$this->errors);
          }
 
+    }
+
+    /**
+     * 获取$name的首字母
+     * @param $name
+     * @return string
+     */
+    private function getPinyin($name){
+        $pinyin = new Pinyin();
+        return $pinyin->abbr($name);
     }
 
     /**
@@ -113,7 +125,7 @@ class Person extends Base{
         $update = $data;
         if($this->model->checkUpdate($data,$this->errors)) {//验证通过
             try{
-
+                $update['pinyin'] = $this->getPinyin($update['name']);
                 $this->dbObj->where(array('id'=>$id))->data($update)->update();
             }catch(\Exception $e){
                 return $this->getSuccInfo(0,$e->getMessage());

@@ -40,13 +40,13 @@
 
                         <label class="col-sm-2 control-label">开始时间：</label>
                         <div class="col-sm-10 my-margin">
-                            <input class=" form-control" v-model="loan.begin_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})"
+                            <input class=" form-control" v-model="loan.begin_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                    name="begin_date" value="" style="width: 50%;">
                         </div>
 
                         <label class="col-sm-2 control-label">结束时间：</label>
                         <div class="col-sm-10 my-margin">
-                            <input class=" form-control"  v-model="loan.end_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                            <input class=" form-control"  v-model="loan.end_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                    name="end_date" value="" style="width: 50%;">
                         </div>
 
@@ -127,7 +127,7 @@
             ],
             pname : '',//搜索名称
             selectPerson : {id:'',mobile:'',shenfenzheng:'',name:''},
-            inputStart : false, //用来控制中文的输入
+            inputStart : true, //用来控制中文的输入
 
             loan:{begin_date:'',end_date:'',rate:'',amount:'',period:'日',exp_income:0,rec_rate:'',exp_final_income:0,
                   status:0}

@@ -40,13 +40,13 @@
 
                         <label class="col-sm-2 control-label">开始时间：</label>
                         <div class="col-sm-10 my-margin">
-                            <input class=" form-control" v-model="loan.begin_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d'})"
+                            <input class=" form-control" v-model="loan.begin_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                    name="begin_date" value="" style="width: 50%;">
                         </div>
 
                         <label class="col-sm-2 control-label">结束时间：</label>
                         <div class="col-sm-10 my-margin">
-                            <input class=" form-control"  v-model="loan.end_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                            <input class=" form-control"  v-model="loan.end_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                    name="end_date" value="" style="width: 50%;">
                         </div>
 
@@ -113,7 +113,7 @@
             ],
             pname : '{$data["name"]}',//搜索名称
             selectPerson : {id:'{$data["person_id"]}',mobile:'{$data["mobile"]}',shenfenzheng:'{$data["shenfenzheng"]}',name:'{$data["name"]}'},
-            inputStart : false, //用来控制中文的输入
+            inputStart : true, //用来控制中文的输入
 
             loan:{id:'{$data["id"]}',begin_date:'{$data["begin_date"]}',end_date:'{$data["end_date"]}',rate:'{$data["rate"]}',
                 amount:'{$data["loan_amount"]}',period:'{$data["period"]}',exp_income:'{$data["exp_income"]}',
