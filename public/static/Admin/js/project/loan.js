@@ -14,13 +14,21 @@ var loanVue = new Vue({
             status:'',rec_person:'',real_income:'',real_final_income:''},
         personListUrl : '',
         getExpincomeUrl : '',
-        getFinalIncomeUrl : ''
+        getFinalIncomeUrl : '',
+        rec_pname : '',
+        recPersons : [
+            {'name':'','id':'','shenfenzheng':'','mobile':''}
+        ],
+        selectRecPerson : {id:'',mobile:'',shenfenzheng:'',name:''}
 
 
     },
     methods: {
         inputFocus:function(){
             $('#person_list').css('display','block');
+        },
+        inputRecFocus:function(){
+            $('#rec_list').css('display','block');
         },
         getPerson: function (id) {
             //console.log(vue.inputStart);
@@ -38,6 +46,42 @@ var loanVue = new Vue({
                         _this.persons = [];
                         for (var index in data){
                             _this.persons.push(
+                                {
+                                    name:data[index].name,
+                                    id:data[index].id,
+                                    shenfenzheng:data[index].shenfenzheng,
+                                    mobile:data[index].mobile
+                                }
+                            );
+                        }
+
+
+                    },
+                    error: function () {
+                        alert("错误");
+                    }
+
+                });
+            }
+
+        },
+
+        getRecPerson: function (id) {
+            //console.log(vue.inputStart);
+            if(this.inputStart){
+                var _this=this;
+                $.ajax({
+                    type: "GET",
+                    url: this.personListUrl,
+                    data: {
+                        name: this.rec_pname
+                    },
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        // console.log(JSON.stringify(data));
+                        _this.recPersons = [];
+                        for (var index in data){
+                            _this.recPersons.push(
                                 {
                                     name:data[index].name,
                                     id:data[index].id,
@@ -82,6 +126,18 @@ var loanVue = new Vue({
 
         },
 
+        toselectRecPerson : function(event){
+            this.selectRecPerson = {
+                id:    event.target.getAttribute('pid'),
+                mobile:event.target.getAttribute('mobile'),
+                shenfenzheng:event.target.getAttribute('shenfenzheng'),
+                name:event.target.innerHTML
+            };
+            this.rec_pname = event.target.innerHTML;
+            $('#rec_list').css('display','none');
+
+
+        },
         /**
          * 计算收益
          */

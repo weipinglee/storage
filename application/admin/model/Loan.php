@@ -46,7 +46,7 @@ class Loan extends Base{
         'loan_amount'  => 'float',
         'period'       => 'varchar',
         'rate'         => 'float',
-        'rec_person'   => 'int',
+        'rec_person_id'   => 'int',
         'rec_rate'     => 'float',
         'exp_final_income' => 'float',
         'real_end_date' => 'date',

@@ -75,8 +75,15 @@
                         </div>
 
                         <label class="col-sm-2 control-label">推荐人：</label>
+                        <input type="hidden" name="rec_person_id" :value="selectRecPerson.id" datatype="*"/>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" name="rec_person" v-model="loan.rec_person" class="form-control"  style="width: 50%;" />
+                            <input type="text" class="form-control"   v-on:focus="inputRecFocus" v-on:compositionstart="getPersonStart"
+                                   v-on:compositionend="getPersonEnd" v-on:input="getRecPerson"
+                                   v-model="rec_pname"    style="width: 50%;"/>
+                            <div id="rec_list" style="position:absolute;z-index:999;background-color: white;width:50%;">
+                                <p v-for="person in recPersons" :pid="person.id" :mobile="person.mobile" :shenfenzheng="person.shenfenzheng" v-on:click="toselectRecPerson($event)">{{person.name}}</p>
+
+                            </div>
                         </div>
 
                         <label class="col-sm-2 control-label">推荐人分成：</label>
@@ -124,6 +131,7 @@
 
 
     loanVue.pname = '{$data["name"]}';
+    loanVue.rec_pname = '{$data["rec_name"]}';
     loanVue.selectPerson = {id:'{$data["person_id"]}',mobile:'{$data["mobile"]}',shenfenzheng:'{$data["shenfenzheng"]}',name:'{$data["name"]}'};
     loanVue.loan = {id:'{$data["id"]}',begin_date:'{$data["begin_date"]}',end_date:'{$data["end_date"]}',rate:'{$data["rate"]}',
         amount:'{$data["loan_amount"]}',period:'{$data["period"]}',exp_income:'{$data["exp_income"]}',
@@ -132,5 +140,6 @@
     loanVue.personListUrl = '{:url("admin/Loan/personList")}';
     loanVue.getExpincomeUrl = '{:url("admin/Loan/getExpIncome")}';
     loanVue.getFinalIncomeUrl = '{:url("admin/Loan/getFinalIncome")}';
+    loanVue.selectRecPerson = {id:'{$data["rec_person_id"]}'};
 
 </script>

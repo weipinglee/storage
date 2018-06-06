@@ -49,9 +49,9 @@ class Loan extends Base{
             return false;
         }
         $query = new \extDB\DbQuery($this->tableName . ' as l ');
-        $query->join = 'left join person as p1 on l.person_id=p1.id ';
-                       // left join person as p2 on l.rec_person=p2.id ';
-        $query->fields = 'l.*,p1.id as person_id,p1.name ,p1.mobile,p1.shenfenzheng';
+        $query->join = 'left join person as p1 on l.person_id=p1.id 
+                        left join person as p2 on l.rec_person_id=p2.id ';
+        $query->fields = 'l.*,p1.id as person_id,p1.name ,p1.mobile,p1.shenfenzheng,p2.name as rec_name';
          $query->where = 'l.id=:id';
          $query->bind = array('id'=>$id);
          return $query->getObj();
