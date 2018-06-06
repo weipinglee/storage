@@ -22,6 +22,7 @@ class Loan extends Base{
         'period'       => 'chsAlpha',
         'rate'         => 'float',
         'rec_person'   => 'chsAlpha',
+        'rec_person_id'   => 'number',
         'rec_rate'     => 'float',
         'exp_final_income' => 'float',
         'real_end_date' => 'date',
