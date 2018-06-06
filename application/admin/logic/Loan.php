@@ -13,7 +13,7 @@ namespace app\admin\logic;
 class Loan extends Income {
 
     public function computeIncome($amount,$begin,$end,$rate,$period,$rec_rate=0){
-        return $this->getIncome($amount,$begin,$end,$rate,$period,0);
+        return $this->getIncome($amount,$begin,$end,$rate,$period,$rec_rate);
 
 
 
