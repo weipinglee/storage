@@ -50,7 +50,8 @@ class ThinkPDO {
             }else{
                 switch($type){
                     case 'UPDATE' :
-                    case 'DELETE' :{
+                    case 'DELETE' :
+                    default:{
                         return Db::execute($sql,$data);
                     }
                     break;

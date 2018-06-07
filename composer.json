@@ -34,7 +34,6 @@
         "preferred-install": "dist"
     },
     "require-dev": {
-        "phpunit/phpunit" : "^6.2",
-        "phpunit/dbunit": "3.0.*"
+        "topthink/think-testing":"1.0.*"
     }
 }
