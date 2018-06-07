@@ -1,18 +1,18 @@
 {
-    "name": "topthink/think",
-    "description": "the new thinkphp framework",
+    "name": "",
+    "description": "fund management system",
     "type": "project",
     "keywords": [
         "framework",
         "thinkphp",
         "ORM"
     ],
-    "homepage": "http://thinkphp.cn/",
-    "license": "Apache-2.0",
+
+    "license": "",
     "authors": [
         {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
+            "name": "weipinglee",
+            "email": "weiping.lee@163.com"
         }
     ],
     "require": {
