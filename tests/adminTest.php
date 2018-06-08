@@ -16,7 +16,7 @@ class adminTest extends TestCase
     public static function setUpBeforeClass(){
         //设置测试数据库
         \think\Config::set('database.database','test_loan');
-        //设置请求信息
+        //设置请求信息,否则应用中找不到模型类
         Request::instance(array('module'=>'admin'));
     }
 
