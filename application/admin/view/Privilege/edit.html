@@ -1,0 +1,70 @@
+<layout name="layout"/>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>修改权限 <small>请先编辑上级权限</small></h5>
+                <h5><small style="color: red">非管理人员，请不要操作此页！</small></h5>
+            </div>
+            <div class="ibox-content">
+                <form method="post" class="form-horizontal">
+                    <input type="hidden" class="form-control" name="id" value="<?php echo $data['id']; ?>" />
+
+                    <div class="form-group has-error">
+                        <label class="col-sm-2 control-label">上级权限：</label>
+                        <div class="col-sm-10">
+                            <select class="form-control m-b" name="parent_id" style="width: 50%;">
+                                <option value="0">顶级权限</option>
+                                <?php foreach ($parentData as $k => $v): ?>
+                                <?php if($v['id'] == $data['id'] || in_array($v['id'], $children)) continue ; ?>
+                                <option <?php if($v['id'] == $data['parent_id']): ?>selected="selected"<?php endif; ?> value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']).$v['pri_name']; ?></option>
+                                <?php endforeach; ?>					</select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">权限名称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="pri_name" style="width: 50%;" value="<?php echo $data['pri_name']; ?>" />
+                            <span class="help-block m-b-none" style="font-size: 12px;color: darkgrey;">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+
+                        <label class="col-sm-2 control-label">模块名称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="module_name" style="width: 50%;" value="<?php echo $data['module_name']; ?>" />
+                            <span class="help-block m-b-none" style="font-size: 12px;color: darkgrey;">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+
+                        <label class="col-sm-2 control-label">控制器名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="controller" style="width: 50%;" value="<?php echo $data['controller']; ?>" />
+                            <span class="help-block m-b-none" style="font-size: 12px;color: darkgrey;">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+
+                        <label class="col-sm-2 control-label">方法名称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="action_name" style="width: 50%;" value="<?php echo $data['action_name']; ?>" />
+                            <span class="help-block m-b-none" style="font-size: 12px;color: darkgrey;">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">保存</button>
+                            <button class="btn btn-default" type="submit">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",})
+    });
+</script>
+

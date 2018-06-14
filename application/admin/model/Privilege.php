@@ -8,9 +8,11 @@
 // +----------------------------------------------------------------------
 namespace app\admin\Model;
 use think\Model;
-
+use \extDB\DbModel;
 use \extDB\DbQuery;
-class Privilege extends Model{
+class Privilege extends Base{
+
+    protected $tableName = 'privilege';
     //允许插入的字段
     protected $insertFields = array('pri_name','module_name','controller','action_name','parent_id');
     //允许更新的字段
@@ -28,7 +30,8 @@ class Privilege extends Model{
     //取数据
     public function getTree()
     {
-        $data = $this->select();
+        $model = new DbModel($this->tableName);
+        $data = $model->select();
         return $this->_reSort($data);
     }
     private function _reSort($data, $parent_id=0, $level=0, $isClear=TRUE)
