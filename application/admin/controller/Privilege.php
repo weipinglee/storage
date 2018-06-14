@@ -7,6 +7,7 @@
 // | @desc：
 // +----------------------------------------------------------------------
 namespace app\admin\Controller;
+use think\Request;
 
 class Privilege extends Base
 {
@@ -31,6 +32,9 @@ class Privilege extends Base
     }
 
 
+    /**
+     * 权限列表接口
+     */
     public function priv_list(){
         $model = $this->model;
         $data = $model->getTree();
@@ -38,10 +42,10 @@ class Privilege extends Base
     }
 
 
-    public function add()
+    public function add(Request $request)
     {
 //        var_dump(I('post.'));exit();
-        if(IS_POST)
+        if($request->isPost())
         {
             $model = $this->model;
             if($model->create(I('post.'), 1))
@@ -53,17 +57,11 @@ class Privilege extends Base
                 }
             }
             $this->error($model->getError());
-        }
-        $parentModel = D('Privilege');
-        $parentData = $parentModel->getTree();
-        $this->assign('parentData', $parentData);
+        }else{
 
-        // 设置页面中的信息
-        $this->assign(array(
-            '_page_btn_name' => '权限列表',
-            '_page_btn_link' => U('lst'),
-        ));
-        $this->display();
+            return $this->fetch();
+        }
+
     }
     public function edit()
     {
