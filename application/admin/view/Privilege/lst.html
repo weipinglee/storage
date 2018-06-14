@@ -18,9 +18,7 @@
 
                     <tr class="gradeA" v-for="priv in privs" v-show="priv.show">
                         <td >
-                            <span v-for="i in priv.level">
-                                 &nbsp;&nbsp;
-                            </span>
+                            {{priv.pre}}
 
                             <a href="#" v-on:click="showLevel(priv.id)" v-if="priv.plus===true">
                                 <span class="glyphicon glyphicon-plus"></span>
@@ -35,7 +33,7 @@
                         <td>{{priv.controller}}</td>
                         <td>{{priv.action_name}}</td>
                         <td class="f-14" align="center">
-                            <a title="编辑"  href="{:url('edit')}" style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a title="编辑"  :href="url.edit+'?id='+priv.id" style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         </td>
                     </tr>
@@ -53,6 +51,8 @@
 
     priVue.init_status = 'open';
     priVue.url.privs_list = "{:url('priv_list')}";
+    priVue.url.edit = "{:url('edit')}";
+    priVue.pre_label = '&nbsp;&nbsp;';
     priVue.getPrivs();
 
 

@@ -7,8 +7,9 @@
                 <h5><small style="color: red">非管理人员，请不要操作此页！</small></h5>
             </div>
             <div class="ibox-content">
-                <form method="post" class="form-horizontal">
-                    <div class="form-group has-error">
+                <form method="post" action="{:url('admin/privilege/add')}" class="form-horizontal" auto_submit="1" redirect_url="{:url('admin/privilege/lst')}">
+
+                <div class="form-group has-error">
                         <label class="col-sm-2 control-label">上级权限：</label>
                         <div class="col-sm-10">
                             <select class="form-control m-b" name="parent_id" style="width: 50%;">
@@ -66,7 +67,7 @@
     priVue.url.privs_list = "{:url('priv_list')}";
     priVue.pre_label = '--';
     priVue.getPrivs();
-    console.log(JSON.stringify(privs));
+
 </script>
 
 

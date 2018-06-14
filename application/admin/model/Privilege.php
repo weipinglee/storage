@@ -22,10 +22,13 @@ class Privilege extends Base{
     protected $_validate = array(
           'pri_name'=> 'chsAlphaNum|max:20',//字母数字中文且小于30位
           'module_name' => 'chsAlphaNum|max:30',
-          'controller_name' => 'chsAlphaNum|max:30',
+          'controller' => 'chsAlphaNum|max:30',
           'action_name' => 'chsAlphaNum|max:30',
           'parent_id' => 'number',
     );
+
+
+
     /************************************* 递归相关方法 *************************************/
     //取数据
     public function getTree()
