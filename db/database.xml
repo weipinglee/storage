@@ -8,4 +8,5 @@
 
     <include file="D:\wamp64\www\fund\db\structure.xml"/>
     <include file="D:\wamp64\www\fund\db\data_init.xml"/>
+    <include file="D:\wamp64\www\fund\db\st_privilege.sql"/>
 </databaseChangeLog>

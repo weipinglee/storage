@@ -313,8 +313,32 @@
 
     <changeSet author="weipinglee" id="2018060602" >
         <addColumn tableName="st_loan">
-            <column name="rec_person_id" type="int(30)" defaultValue="">
+            <column name="rec_person_id" type="int(11)" defaultValue="0">
                 <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="weipinglee" id="2018061401" >
+        <addColumn tableName="st_person">
+            <column name="admin_id" type="int(11)" defaultValue="0" >
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="weipinglee" id="2018061402" >
+        <addColumn tableName="st_loan">
+            <column name="admin_id" type="int(11)" defaultValue="0" >
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="weipinglee" id="2018061403" >
+        <addColumn tableName="st_storage">
+            <column name="admin_id" type="int(11)" defaultValue="0" >
+                <constraints nullable="false" />
             </column>
         </addColumn>
     </changeSet>

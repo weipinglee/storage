@@ -1,22 +1,6 @@
-/*
-Navicat MySQL Data Transfer
+--liquibase formatted sql
 
-Source Server         : 127
-Source Server Version : 50714
-Source Host           : localhost:3306
-Source Database       : loan
-
-Target Server Type    : MYSQL
-Target Server Version : 50714
-File Encoding         : 65001
-
-Date: 2018-06-07 08:23:28
-*/
-
-
--- ----------------------------
--- Records of st_privilege
--- ----------------------------
+--changeset weipinglee:2018061401
 INSERT INTO `st_privilege` VALUES ('1', '权限管理', '', '', '', '0', '1');
 INSERT INTO `st_privilege` VALUES ('2', '权限列表', 'Admin', 'Privilege', 'lst', '1', '0');
 INSERT INTO `st_privilege` VALUES ('3', '添加权限', 'Privilege', 'Admin', 'add', '2', '1');
