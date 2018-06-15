@@ -76,41 +76,33 @@ class Role extends Base{
     {
         if($request->isPost())
         {
-            $model = D('Role');
-//    		var_dump(I('post.'));exit();
-            if($model->create(I('post.'), 2))
-            {
-                if($model->save() !== FALSE)
-                {
-                    $this->success('修改成功！', U('lst'));
-                    exit;
-                }
-            }
-            $this->error($model->getError());
+            $params = $request->param();
+            $id = $params['id'];
+            $data = array(
+                'role_name'=>$params['role_name'],
+                'pri_id' => $params['pri_id']
+            );
+            die(json_encode($this->model->edit($id,$data)));
         }else{
-            $role_name = D('Role')->find($id);
-            //取出所有的权限
-            $priModel = D('privilege');
-            $priData = $priModel->getTree();
-            $this->assign('priData', $priData);
-            //取出用户权限
-            $user_priData = $priModel->getPriByUserId($id);
-            $this->assign('user_priData', $user_priData);
 
-
-            $this->assign('role_name', $role_name);
-//        var_dump($priData,$user_priData);exit();
-            // 设置页面中的信息
+            $id = $request->param('id');
             $this->assign(array(
+                'id'=>$id,
                 '_page_btn_name' => '角色列表',
-                '_page_btn_link' => U('lst'),
+                '_page_btn_link' => url('lst'),
             ));
-            $this->display();
+            return $this->fetch();
         }
 
     }
-    public function delete()
-    {
 
+
+    /**
+     * 获取一条角色数据，包含权限
+     * @param Request $request
+     */
+    public function oneRole(Request $request){
+        $id = $request->param('id');
+        die(json_encode($this->model->row($id)));
     }
 }

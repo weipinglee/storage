@@ -43,7 +43,14 @@ class Role extends Base{
     }
 
     public function row($id){
-         return $this->dbObj->where(array('id'=>$id))->getObj();
+         $row=  $this->dbObj->where(array('id'=>$id))->getObj();
+         if(isset($row['id'])){
+             $priObj = new DbModel('role_pri');
+             $row['pri'] = $priObj->where(array('role_id'=>$row['id']))->getFields('pri_id');
+         }else{
+             $row['pri'] = '';
+        }
+         return $row;
     }
 
     /**
@@ -104,13 +111,35 @@ class Role extends Base{
             $this->errors = '不存在';
         }
         $id = intval($id);
-        $update = $data;
 
-        if(empty($update)){
-            return $this->getSuccInfo(0,'更新字段为空');
+        $update = array(
+          'role_name'=>$data['role_name']
+        );
+
+        if($this->model->checkUpdate($data,$this->errors)) {//验证通过
+            $this->dbObj->beginTrans();
+
+            $this->dbObj->where(array('id' => $id))->data($update)->update();
+            $priObj = new DbModel('role_pri');
+            $priObj->where(array('role_id' => $id))->delete();
+            //添加权限
+            $pri_data = array();
+            if (isset($data['pri_id']) && !empty($data['pri_id'])) {
+                foreach ($data['pri_id'] as $val) {
+                    $pri_data[] = array('pri_id' => $val, 'role_id' => $id);
+                }
+            }
+            $priObj->data($pri_data)->adds();
+
+            $this->dbObj->commit();
+            return $this->getSuccInfo();
+
         }
-         $this->dbObj->where(array('id'=>$id))->data($update)->update();
-        return $this->getSuccInfo();
+
+        if($this->errors){
+            $this->dbObj->rollBack();
+            return $this->getSuccInfo(0,$this->errors);
+        }
 
     }
 

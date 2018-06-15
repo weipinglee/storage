@@ -23,7 +23,7 @@
                         <td>admin</td>
                         <td><?php if($v['id'] == 1) echo '拥有至高无上的权利'; echo $v['pri_name']?></td>
                         <td class="f-14" align="center">
-                            <a title="编辑" href=""  style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a title="编辑" href="{:url('edit')}?id={$v['id']}"  style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a title="删除" href="" onclick="return confirm('确定要删除吗？');" class="ml-5" style="text-decoration:none;color: red;"><i class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>

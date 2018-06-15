@@ -4,13 +4,15 @@ var priVue = new Vue({
         init_status : 'open',//open和close,初始是关闭还是打开
         url : {
             privs_list : '',
-            edit : ''
+            edit : '',
+            oneRole : ''
         },
         pre_label : '--',//设置权限名前的前缀
         privs : {},//列表数据
         privRow : {id:0},//编辑页面单个权限数据
 
-        roleSelectedPriv :[] //角色编辑页面选中的权限
+        roleSelectedPriv :[], //角色编辑页面选中的权限
+        role: {}
 
     },
     methods : {
@@ -185,6 +187,23 @@ var priVue = new Vue({
             })
 
 
+        },
+
+        //获取一个角色的信息
+        getOneRole :function (id) {
+            var _this = this;
+            $.ajax({
+                type: 'GET',
+                url: this.url.oneRole,
+                data : {id:id},
+                dataType: 'json',
+                success: function (data) {
+                  // console.log(JSON.stringify(data));
+                   _this.role = data;
+                   _this.roleSelectedPriv = data['pri'];
+
+                }
+            });
         }
     },
     watch : {
