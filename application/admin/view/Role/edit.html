@@ -1,0 +1,85 @@
+<layout name="layout"/>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>修改管理员角色 <small></small></h5>
+                <h5><small style="color: red">非管理人员，请不要操作此页！</small></h5>
+            </div>
+            <div class="ibox-content">
+                <form method="post" class="form-horizontal">
+                    <input type="hidden" class="form-control" name="id" value="{:$role_name['id']}">
+                    <div class="form-group has-error">
+                        <label class="col-sm-2 control-label">角色名称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="role_name" style="width: 50%;" value="{:$role_name['role_name']}"/>
+                            <span class="help-block m-b-none" style="font-size: 12px;color: darkgrey;">&nbsp;&nbsp;&nbsp;&nbsp;请编辑管理员角色名称！</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <!--权限-->
+                    <div class="form-group">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                            <th class="col-sm-2 control-label">权&nbsp;&nbsp;&nbsp;&nbsp;限：</th>
+                            <th><label class="control-label"><input id="checkAll" name="" type="checkbox" value="">全选</label></th>
+                            </thead>
+
+                            <tbody>
+                            <tr class="gradeA">
+                                <td>&nbsp;</td>
+                                <td>
+                                    <?php foreach($priData as $key =>$v): ?>
+                                    <foreach name="user_priData" item="v1">
+                                        <php>
+                                            if($v['id'] == $v1['id']){
+                                                $checked='checked="checked"';
+                                                break;
+                                            }else{
+                                                $checked="";
+                                            }
+                                        </php>
+                                    </foreach>
+                                        <input name="pri_id[]" type="checkbox" value="{:$v['id']}" <?php  echo $checked;?> >
+                                        {:$v['pri_name']}<br />
+                                    <?php endforeach; ?>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">保存</button>
+                            <button class="btn btn-default" type="submit">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",})
+    });
+
+    $("#checkAll").click(function () {
+        var status= $("#checkAll").is(':checked');
+        if (status) { // 全选
+            $("input[name='pri_id[]']").each(function () {
+                $(this).attr("checked", true);
+            });
+        } else if(status ==false){ // 取消全选
+            $("input[name='pri_id[]']").each(function () {
+                $(this).prop("checked", false);
+            });
+
+        }
+    });
+</script>
+

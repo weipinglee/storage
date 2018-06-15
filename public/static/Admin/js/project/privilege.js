@@ -8,7 +8,9 @@ var priVue = new Vue({
         },
         pre_label : '--',//设置权限名前的前缀
         privs : {},//列表数据
-        privRow : {id:0}//编辑页面单个权限数据
+        privRow : {id:0},//编辑页面单个权限数据
+
+        roleSelectedPriv :[] //角色编辑页面选中的权限
 
     },
     methods : {
@@ -115,6 +117,72 @@ var priVue = new Vue({
                 _this.privRow =  {};
             }
           //  console.log(JSON.stringify(_this.privs));
+
+
+        },
+
+
+        //选中一个权限，为角色分配权限页面
+        //@parameter:id,选中的值
+        //@parameter：derection : 方向，向上或向下
+        checkOne : function(id,direction){
+            var _this = this;
+            this.$nextTick(function(){
+                console.log(JSON.stringify(this.roleSelectedPriv));
+
+                if(this.roleSelectedPriv.indexOf(id)>=0){//该元素选中，把他的所有子元素也选中
+
+                    for (var index in _this.privs){
+
+                        //选中所有子元素
+                        if(_this.privs[index]['parent_id']===id && (direction===undefined || direction==='down')){
+                            if(this.roleSelectedPriv.indexOf(_this.privs[index].id)===-1){
+                                this.roleSelectedPriv.push(_this.privs[index].id) ;
+                            }
+
+                            this.checkOne(_this.privs[index].id,'down');
+                        }
+
+                        //选中所有父级元素
+                        if(_this.privs[index]['id']===id && (direction===undefined || direction==='up')){
+                            var parentIndex = this.roleSelectedPriv.indexOf(_this.privs[index]['parent_id']);
+                            if(parentIndex===-1 && _this.privs[index]['parent_id']>0){
+                                this.roleSelectedPriv.push(_this.privs[index]['parent_id']);
+                            }
+                            if(_this.privs[index]['parent_id']>0){
+                                this.checkOne(_this.privs[index]['parent_id'],'up');
+                            }
+
+                        }
+                        // console.log(_this.privRow.parent_id);
+
+                    }
+                }else{//该元素取消选中,他的所有父级元素取消选中,所有下级元素取消选中
+                    for (var index in _this.privs){
+
+                        //取消选中所有父级元素
+                        // if(_this.privs[index]['id']===id && (direction===undefined || direction==='up')){
+                        //     var parentIndex = this.roleSelectedPriv.indexOf(_this.privs[index]['parent_id']);
+                        //     if(parentIndex>=0){
+                        //         this.roleSelectedPriv.splice(parentIndex,1);
+                        //     }
+                        //     this.checkOne(_this.privs[index]['parent_id'],'up');
+                        // }
+
+                        //取消选中所有下级元素
+                        if(_this.privs[index]['parent_id']===id && (direction===undefined || direction==='down')){
+                            var childIndex = this.roleSelectedPriv.indexOf(_this.privs[index].id);
+                            if(childIndex >= 0){
+                                this.roleSelectedPriv.splice(childIndex,1) ;
+                            }
+                            this.checkOne(_this.privs[index].id,'down');
+                        }
+                        // console.log(_this.privRow.parent_id);
+
+                    }
+                }
+               // console.log(_this.privRow.parent_id);
+            })
 
 
         }
