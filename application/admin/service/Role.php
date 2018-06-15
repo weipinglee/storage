@@ -95,7 +95,14 @@ class Role extends Base{
      * @return mixed
      */
     public function del($id){
+        $this->dbObj->beginTrans();
+        $res = $this->dbObj->where(array('id'=>$id))->delete();
+        if($res){
+            $priObj = new DbModel('role_pri');
+            $priObj->where(array('role_id'=>$id))->delete();
+        }
 
+        $this->dbObj->commit();
          return $this->getSuccInfo();
 
     }

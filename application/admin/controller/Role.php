@@ -96,6 +96,12 @@ class Role extends Base{
 
     }
 
+    public function delete(Request $request){
+        $id = $request->param('id');
+        die(json_encode($this->model->del($id)));
+
+    }
+
 
     /**
      * 获取一条角色数据，包含权限
