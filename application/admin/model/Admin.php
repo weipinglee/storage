@@ -65,6 +65,14 @@ class Admin extends Base{
             Session::set('id',$row['id']);
             Session::set('adminname',$row['adminname']);
             Session::set('name',$row);
+
+            $adminService = \think\Loader::model('Admin','service');
+            $adminData = $adminService->row($row['id']);
+            $role_id = $adminData['role_id'];
+            Session::set('role_id',$role_id);
+            $roleService = \think\Loader::model('Role','service');
+            $roleData = $roleService->row($role_id);
+            Session::set('role_name',isset($roleData['role_name']) ? $roleData['role_name'] : '');
             return self::getSuccInfo();
 
         }else{

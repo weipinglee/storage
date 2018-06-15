@@ -48,7 +48,7 @@
                                         <?php if(session('id') == 1) :?>
                                         <?php echo '超级管理员'; ?>
                                         <?php else :?>
-
+                                        <?php echo session('role_name'); ?>
                                         <?php endif;?><b class="caret"></b>
                                     </span>
                                 </span>

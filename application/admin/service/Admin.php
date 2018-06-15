@@ -44,7 +44,7 @@ class Admin extends Base{
 
     public function row($id){
          $data = $this->dbObj->where(array('id'=>$id))->getObj();
-
+        $data['role_id'] = 0;
          if(!empty($data)){
              //获取管理员角色
              $adminRole = new DbModel('admin_role');
