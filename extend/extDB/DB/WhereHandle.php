@@ -26,7 +26,7 @@ class WhereHandle
         }elseif(is_array($where) && !empty($where)){
             $whereStr = ' ';
             foreach($where as $key=>$val){
-                if(is_string($val)){
+                if(!is_array($val)){
                     $whereStr .= call_user_func(array($this,'eq'),$key,$val). ' AND ';
                 }elseif(is_array($val)){     //比如where为：array($key=>array('eq',3))
                     $action = '';

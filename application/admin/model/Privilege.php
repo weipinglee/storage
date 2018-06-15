@@ -10,6 +10,7 @@ namespace app\admin\Model;
 use think\Model;
 use \extDB\DbModel;
 use \extDB\DbQuery;
+use \think\Session;
 class Privilege extends Base{
 
     protected $tableName = 'privilege';
@@ -55,7 +56,8 @@ class Privilege extends Base{
     }
     public function getChildren($id)
     {
-        $data = $this->select();
+        $model = new DbModel($this->tableName);
+        $data = $model->select();
         return $this->_children($data, $id);
     }
     private function _children($data, $parent_id=0, $isClear=TRUE)
@@ -95,18 +97,23 @@ class Privilege extends Base{
     public function chkPri($rountParam=array())
     {
         //获取当前管理员所拥有的权限
-        $adminId =session('id');
+        $adminId =Session::get('id');
         //超级管理员有所有权限
         if($adminId ==1)
             return true;
         $arModel = new DbQuery('admin_role as a');
         $arModel->join = 'left join role_pri as b on a.role_id=b.role_id 
                            left join privilege as  c on b.pri_id =c.id';
-        $arModel->where = 'a.admin_id='.$adminId.' and c.module_name='.$rountParam['module'].' AND 
-                           c.controller='.$rountParam['controller'].' AND c.action_name='.$rountParam['action'];
-        $arModel->fields = 'count(a.id)';
+        $where = array(
+            'a.admin_id' => $adminId,
+            'c.module_name'=> $rountParam['module'],
+            'c.controller' => $rountParam['controller'],
+            'c.action_name'=> $rountParam['action']
+        );
+        $arModel->where = $where;
+        $arModel->fields = 'count(a.admin_id) as count';
         $has = $arModel->find();
-        return ($has[0] >0);
+        return ($has[0]['count'] >0);
 
     }
 

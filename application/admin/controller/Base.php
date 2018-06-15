@@ -3,7 +3,7 @@
 namespace app\admin\Controller;
 use think\Controller;
 use think\Request;
-
+use think\Session;
 
 class Base extends Controller{
 
@@ -14,13 +14,13 @@ class Base extends Controller{
 
 
         //判断登录
-        if(!session('id'))
+        if(!Session::get('id'))
             $this->redirect('login/login');
 
         //get module,controller,action name
         $request = Request::instance();
 
-        return true;//暂部分权限
+
 
         $routParam = array(
             'module'=>$request->module(),
@@ -34,9 +34,13 @@ class Base extends Controller{
 
         //权限管理后续再加
         $priModel = model('Privilege');
-        if(!$priModel->chkPri())
+        if(!$priModel->chkPri($routParam))
         {
-            $this->error('无权访问！');
+            $request = Request::instance();
+            if($request->isAjax()){
+                die(json_encode(array('success'=>0,'info'=>'您无权限操作此项')));
+            }
+            $this->redirect('admin/index/index');
         }
 
     }
