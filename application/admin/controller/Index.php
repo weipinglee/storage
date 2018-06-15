@@ -9,6 +9,8 @@
 namespace app\admin\Controller;
 
 use \think\Loader;
+use think\Request;
+
 class Index extends Base
 {
 
@@ -49,4 +51,18 @@ class Index extends Base
 
         return $this->fetch('index_v1');
     }
+
+    public function password(Request $request){
+         if($request->isPost()){
+             $id = \think\Session::get('id');
+             $data = array('password'=>$request->param('password'));
+             $model = \think\Loader::model('admin','service');
+             $res = $model->edit($id,$data);
+             die(json_encode($res));
+         }else{
+             $this->view->engine->layout('layout/layout');
+             return $this->fetch();
+         }
+    }
+
 }

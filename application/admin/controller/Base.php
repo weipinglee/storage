@@ -32,7 +32,7 @@ class Base extends Controller{
             return true;
         }
 
-        //权限管理后续再加
+        //权限管理
         $priModel = model('Privilege');
         if(!$priModel->chkPri($routParam))
         {
