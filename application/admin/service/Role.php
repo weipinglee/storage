@@ -54,9 +54,19 @@ class Role extends Base{
     public function add($data){
          $this->dbObj->beginTrans();
          if($this->model->checkInsert($data,$this->errors)){//验证通过
-             $num = $this->dbObj->data($data)->add();
+
+             $num = $this->dbObj->data(array('role_name'=>$data['role_name']))->add();
 
              if($num>0){
+
+                 //添加权限
+                 $pri_data = array();
+                 if(isset($data['pri_id']) && !empty($data['pri_id'])){
+                     foreach($data['pri_id'] as $val){
+                         $pri_data[] = array('pri_id'=>$val,'role_id'=>$num);
+                     }
+                 }
+                 $this->dbObj->table('role_pri')->data($pri_data)->adds();
                  $this->dbObj->commit();
                  return $this->getSuccInfo();
              }else{

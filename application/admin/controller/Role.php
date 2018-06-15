@@ -48,16 +48,13 @@ class Role extends Base{
         if($request->isPost())
         {
 //			dump($_POST);exit();
-            $model = D('Role');
-            if($model->create(I('post.'), 1))
-            {
-                if($id = $model->add())
-                {
-                    $this->success('添加成功！', U('lst?p='.I('get.p')));
-                    exit;
-                }
-            }
-            $this->error($model->getError());
+            $params = $request->param();
+            $data = array(
+                'role_name'=>$params['role_name'],
+                'pri_id' => $params['pri_id']
+            );
+            $res = $this->model->add($data);
+            die(json_encode($res));
         }else{
             $this->assign(array(
                 '_page_btn_name' => '角色列表',
@@ -75,10 +72,9 @@ class Role extends Base{
      * @author：Ulex
      * @desc：
      */
-    public function edit()
+    public function edit(Request $request)
     {
-        $id = I('get.id');
-        if(IS_POST)
+        if($request->isPost())
         {
             $model = D('Role');
 //    		var_dump(I('post.'));exit();
@@ -91,37 +87,30 @@ class Role extends Base{
                 }
             }
             $this->error($model->getError());
-        }
-        $role_name = D('Role')->find($id);
-        //取出所有的权限
-        $priModel = D('privilege');
-        $priData = $priModel->getTree();
-        $this->assign('priData', $priData);
-        //取出用户权限
-        $user_priData = $priModel->getPriByUserId($id);
-        $this->assign('user_priData', $user_priData);
+        }else{
+            $role_name = D('Role')->find($id);
+            //取出所有的权限
+            $priModel = D('privilege');
+            $priData = $priModel->getTree();
+            $this->assign('priData', $priData);
+            //取出用户权限
+            $user_priData = $priModel->getPriByUserId($id);
+            $this->assign('user_priData', $user_priData);
 
 
-        $this->assign('role_name', $role_name);
+            $this->assign('role_name', $role_name);
 //        var_dump($priData,$user_priData);exit();
-        // 设置页面中的信息
-        $this->assign(array(
-            '_page_btn_name' => '角色列表',
-            '_page_btn_link' => U('lst'),
-        ));
-        $this->display();
+            // 设置页面中的信息
+            $this->assign(array(
+                '_page_btn_name' => '角色列表',
+                '_page_btn_link' => U('lst'),
+            ));
+            $this->display();
+        }
+
     }
     public function delete()
     {
-        $model = D('Role');
-        if($model->delete(I('get.id', 0)) !== FALSE)
-        {
-            $this->success('删除成功！', U('lst', array('p' => I('get.p', 1))));
-            exit;
-        }
-        else
-        {
-            $this->error($model->getError());
-        }
+
     }
 }

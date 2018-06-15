@@ -7,7 +7,7 @@
                 <h5><small style="color: red">非管理人员，请不要操作此页！</small></h5>
             </div>
             <div class="ibox-content">
-                <form method="post" class="form-horizontal">
+                <form method="post" class="form-horizontal" action="{:url('admin/Role/add')}" auto_submit="1" redirect_url="{:url('admin/role/lst')}">
                     <div class="form-group has-error">
                         <label class="col-sm-2 control-label">角色名称：</label>
                         <div class="col-sm-10">
