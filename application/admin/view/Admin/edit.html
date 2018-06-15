@@ -1,5 +1,5 @@
-<layout name="layout"/>
-<div class="row">
+
+<div class="row" id="role">
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -10,7 +10,17 @@
                 <form method="post" class="form-horizontal" action="{:url('admin/Admin/edit')}" auto_submit="1" redirect_url="{:url('admin/Admin/lst')}">
                     <input type="hidden"  name="id" value="<?php echo $data['id']; ?>" />
                     <input type="hidden"  name="adminname" style="width: 50%;" value="<?php echo $data['adminname']; ?>" />
-
+                   {if condition="$data['id']>1" }
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</label>
+                        <div class="col-sm-10">
+                              <select name="role_id" v-model="selectedRole">
+                                  <option value="0" >请选择</option>
+                                  <option v-for="role in roles" :value="role.id">{{role.role_name}}</option>
+                              </select>
+                        </div>
+                    </div>
+                    {/if}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
                         <div class="col-sm-10">
@@ -30,10 +40,32 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",})
+<script type="text/javascript">
+    var roleVue = new Vue({
+        el : '#role',
+        data : {
+            roles: {},
+            selectedRole :''
+        },
+        methods : {
+            loadRoles : function(){
+                var _this = this;
+                $.ajax({
+                    type : 'get',
+                    dataType : 'json',
+                    url : "{:url('role/allRole')}",
+                    success : function (data) {
+                        console.log(JSON.stringify(data));
+                        _this.roles = data;
+                    }
+                })
+            }
+        }
     });
+
+    roleVue.loadRoles();
+    roleVue.selectedRole = "{$data['role_id']}";
+
 </script>
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
 

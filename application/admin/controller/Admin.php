@@ -41,7 +41,12 @@ class Admin extends Base
     {
         $request = Request::instance();
         if($request->isPost()){
-            $res = $this->serviceModel->add($request->param());
+            $data = array(
+                'adminname'=>$request->param('adminname'),
+                'password'=>$request->param('password'),
+                'role_id' => $request->param('role_id')
+            );
+            $res = $this->serviceModel->add($data);
             die(json_encode($res));
         }elseif($request->isGet()){
             return $this->fetch();
@@ -55,12 +60,17 @@ class Admin extends Base
         $request = Request::instance();
         if($request->isPost()){
             $id = $request->param('id');
-            $data = $request->param();
+            $data = array(
+                'password'=>$request->param('password'),
+                'role_id' => $request->param('role_id')
+            );
             $res = $this->serviceModel->edit($id,$data);
             die(json_encode($res));
         }elseif($request->isGet()){
             $id = $request->param('id');
             $data = $this->serviceModel->row($id);
+            if($data['role_id']=='')
+                $data['role_id']=0;
             $this->assign('data',$data);
             return $this->fetch();
         }
@@ -72,4 +82,6 @@ class Admin extends Base
         $res = $this->serviceModel->del($request->param('id'));
         die(json_encode($res));
     }
+
+
 }

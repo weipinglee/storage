@@ -10,6 +10,7 @@ namespace app\admin\service;
 
 
 use \extDB\DbModel;
+use think\Db;
 
 class Admin extends Base{
 
@@ -42,7 +43,15 @@ class Admin extends Base{
     }
 
     public function row($id){
-         return $this->dbObj->where(array('id'=>$id))->getObj();
+         $data = $this->dbObj->where(array('id'=>$id))->getObj();
+
+         if(!empty($data)){
+             //获取管理员角色
+             $adminRole = new DbModel('admin_role');
+             $data['role_id'] = $adminRole->where(array('admin_id'=>$data['id']))->getField('role_id');
+         }
+         return $data;
+
     }
 
     /**
@@ -56,10 +65,14 @@ class Admin extends Base{
          if($name && $pass){
              $this->dbObj->beginTrans();
              if($this->model->checkInsert($data,$this->errors)){//验证通过
+                 $role_id = isset($data['role_id'])?$data['role_id']:0;
+                 unset($data['role_id']);
                  $data['password'] = md5($data['password']);
                  $num = $this->dbObj->data($data)->add();
 
                  if($num>0){
+                     $adminRole = new DbModel('admin_role');
+                     $adminRole->data(array('admin_id'=>$num,'role_id'=>$role_id))->add();
                      $this->dbObj->commit();
                      return $this->getSuccInfo();
                  }else{
@@ -119,7 +132,17 @@ class Admin extends Base{
         if(empty($update)){
             return $this->getSuccInfo(0,'更新字段为空');
         }
+
+        $this->dbObj->beginTrans();
          $this->dbObj->where(array('id'=>$id))->data($update)->update();
+        if(isset($data['role_id'])){
+            $adminRole = new DbModel('admin_role');
+            $adminRole->where(array('admin_id'=>$id))->delete();
+            $adminRole->data(array('admin_id'=>$id,'role_id'=>$data['role_id']))->add();
+        }
+
+        $this->dbObj->commit();
+
         return $this->getSuccInfo();
 
     }

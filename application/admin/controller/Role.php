@@ -43,6 +43,8 @@ class Role extends Base{
     }
 
 
+
+
     public function add(Request $request)
     {
         if($request->isPost())
@@ -110,5 +112,12 @@ class Role extends Base{
     public function oneRole(Request $request){
         $id = $request->param('id');
         die(json_encode($this->model->row($id)));
+    }
+
+    public function  allRole(Request $request){
+
+        $model = $this->model;
+        $data = $model->lists('',1,10000);
+        die(json_encode($data['data']));
     }
 }
