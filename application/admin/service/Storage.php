@@ -42,17 +42,18 @@ class Storage extends Base{
          return array('data'=>$data,'page'=>$pageData);
     }
 
-    public function row($id){
+    public function row($id,$where=array()){
         $id=intval($id);
         if($id<=0){
             return false;
         }
+
+        $where['l.id'] = $id;
         $query = new \extDB\DbQuery($this->tableName . ' as l ');
         $query->join = 'left join person as p1 on l.person_id=p1.id ';
                        // left join person as p2 on l.rec_person=p2.id ';
         $query->fields = 'l.*,p1.id as person_id,p1.name ,p1.mobile,p1.shenfenzheng';
-         $query->where = 'l.id=:id';
-         $query->bind = array('id'=>$id);
+         $query->where = $where;
          return $query->getObj();
     }
 
@@ -93,7 +94,7 @@ class Storage extends Base{
      * @param int $id
      * @return mixed
      */
-    public function del($id){
+    public function del($id,$where=array()){
          if(intval($id)<=0){
              $this->errors = '不存在';
          }
@@ -102,7 +103,8 @@ class Storage extends Base{
          if($this->errors){
              return $this->getSuccInfo(0,$this->errors);
          }
-          $this->dbObj->where(array('id'=>$id))->data(array('del'=>1))->update();
+        $where['id'] = $id;
+          $this->dbObj->where($where)->data(array('del'=>1))->update();
          return $this->getSuccInfo();
 
     }
@@ -113,13 +115,14 @@ class Storage extends Base{
      * @param $data
      * @return mixed
      */
-    public function edit($id,$data){
+    public function edit($id,$data,$where=array()){
         if(intval($id)<=0){
             $this->errors = '该入仓资金不存在';
         }
         $id = intval($id);
         if($this->model->checkUpdate($data,$this->errors)) {//验证通过
-            $this->dbObj->where(array('id' => $id))->data($data)->update();
+            $where['id'] = $id;
+            $this->dbObj->where($where)->data($data)->update();
             return $this->getSuccInfo();
         }
 

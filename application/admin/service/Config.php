@@ -32,7 +32,7 @@ class Config extends Base{
         return array();
     }
 
-    public function row($id=1){
+    public function row($id=1,$where=array()){
         $data = $this->dbObj->getObj();
         return $data;
     }
@@ -49,7 +49,7 @@ class Config extends Base{
      * @param $data
      * @return mixed
      */
-    public function edit($id,$data){
+    public function edit($id,$data,$where=array()){
         $id = 1;
         if($this->model->checkUpdate($data,$this->errors)) {//验证通过
             $this->dbObj->where(array('id' => $id))->data($data)->update();
@@ -63,7 +63,7 @@ class Config extends Base{
 
     }
 
-    public function del($id){
+    public function del($id,$where=array()){
 
     }
 

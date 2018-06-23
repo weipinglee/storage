@@ -4,7 +4,7 @@ namespace app\admin\event;
 use think\Controller;
 use think\Request;
 
-class Storage {
+class Storage extends Base{
 
 
 
@@ -12,6 +12,7 @@ class Storage {
 
     public function __construct(Request $request = null)
     {
+        parent::__construct();
         $this->serviceModel = \think\Loader::model('Storage','service');
 
 

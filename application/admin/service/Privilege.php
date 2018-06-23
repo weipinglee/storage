@@ -32,7 +32,7 @@ class Privilege extends Base{
          return $this->model->getTree();
     }
 
-    public function row($id){
+    public function row($id,$where=array()){
          return $this->dbObj->where(array('id'=>$id))->getObj();
     }
 
@@ -67,7 +67,7 @@ class Privilege extends Base{
      * @param int $id
      * @return mixed
      */
-    public function del($id){
+    public function del($id,$where=array()){
 
          return $this->getSuccInfo();
 
@@ -79,7 +79,7 @@ class Privilege extends Base{
      * @param $data
      * @return mixed
      */
-    public function edit($id,$data){
+    public function edit($id,$data,$where=array()){
         if(intval($id)<=0){
             $this->errors = '不存在';
         }

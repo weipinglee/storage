@@ -48,7 +48,7 @@ class PersonBank extends Base{
          return array('data'=>$data,'page'=>$pageData);
     }
 
-    public function row($id){
+    public function row($id,$where=array()){
          return $this->dbObj->where(array('id'=>$id))->getObj();
     }
 
@@ -90,7 +90,7 @@ class PersonBank extends Base{
      * @param int $id
      * @return mixed
      */
-    public function del($id){
+    public function del($id,$where=array()){
         $id = intval($id);
          if($id<=0){
              $this->errors = '人员不存在';
@@ -110,7 +110,7 @@ class PersonBank extends Base{
      * @param $data
      * @return mixed
      */
-    public function edit($id,$data){
+    public function edit($id,$data,$where=array()){
         $id = intval($id);
         if($id<=0){
             $this->errors = '管理员不存在';

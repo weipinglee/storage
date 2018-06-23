@@ -87,6 +87,26 @@ class Admin extends Base{
         Session::clear();
     }
 
+    public function logData($f=''){
+        $id = Session::get('id');
+        if($id){
+            $data = array(
+                'id'=> Session::get('id'),
+                'adminname' => Session::get('adminname'),
+                'row_id' => Session::get('row_id'),
+                'row_name' => Session::get('row_name')
+            );
+            if(isset($data[$f])){
+                return $data[$f];
+            }
+            return $data;
+        }else{
+            return false;
+        }
+
+
+    }
+
 
 
 

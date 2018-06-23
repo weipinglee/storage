@@ -24,7 +24,7 @@ abstract class Base{
         return array('success'=>$res,'info'=>$info,'id'=>$id,'time'=>intval($time));
     }
 
-    abstract public function row($id);
+    abstract public function row($id,$where=array());
 
     /**
      * @method put
@@ -38,7 +38,7 @@ abstract class Base{
      * @param int $id
      * @return mixed
      */
-    abstract public function del($id);
+    abstract public function del($id,$where=array());
 
     /**
      * @method post
@@ -46,7 +46,7 @@ abstract class Base{
      * @param $data
      * @return mixed
      */
-    abstract public function edit($id,$data);
+    abstract public function edit($id,$data,$where=array());
 
 
     abstract public function lists($where='',$page=1,$pagesize=10,$bind=array());

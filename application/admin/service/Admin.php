@@ -42,7 +42,7 @@ class Admin extends Base{
          return array('data'=>$data,'page'=>$pageData);
     }
 
-    public function row($id){
+    public function row($id,$where=array()){
          $data = $this->dbObj->where(array('id'=>$id))->getObj();
         $data['role_id'] = 0;
          if(!empty($data)){
@@ -95,7 +95,7 @@ class Admin extends Base{
      * @param int $id
      * @return mixed
      */
-    public function del($id){
+    public function del($id,$where=array()){
          if(intval($id)<=0){
              $this->errors = '管理员不存在';
          }
@@ -117,7 +117,7 @@ class Admin extends Base{
      * @param $data
      * @return mixed
      */
-    public function edit($id,$data){
+    public function edit($id,$data,$where=array()){
         if(intval($id)<=0){
             $this->errors = '管理员不存在';
         }

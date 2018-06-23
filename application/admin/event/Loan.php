@@ -4,7 +4,7 @@ namespace app\admin\event;
 use think\Controller;
 use think\Request;
 
-class Loan {
+class Loan extends Template{
 
 
 
@@ -12,14 +12,15 @@ class Loan {
 
     public function __construct(Request $request = null)
     {
+        parent::__construct();
         $this->serviceModel = \think\Loader::model('Loan','service');
 
 
     }
 
-    public function lst($where=array(),$page=1,$pagesize=10){
-        $model = $this->serviceModel;
-        $whereParse = array();
+    protected function listsWhere()
+    {
+        $where = array();
         if(isset($where['del'])){
             $whereParse['del'] = $where['del']==0 ? 0 : 1;
         }
@@ -47,26 +48,23 @@ class Loan {
             $whereParse['l.status'] = $where['status'];
         }
 
-        $data = $model->lists($whereParse,$page,$pagesize);
-        return $data;
+        if($this->login['id']!=1){
+            $where['l.admin_id'] = $this->login['id'];
+
+        }
+
+        return $where;
     }
 
-    public function row($id){
-        return $this->serviceModel->row($id);
+    protected function rowWhere(){
+        return array('l.admin_id'=>$this->login['id']);
     }
 
-    public function add($data){
-        $res = $this->serviceModel->add($data);
-        return $res;
+    protected function admin_id(&$data){
+        $data['admin_id'] = $this->login['id'];
     }
 
-    public function edit($id,$data){
-        return $this->serviceModel->edit($id,$data);
-    }
 
-    public function delete($id){
-        return $res = $this->serviceModel->del($id);
-    }
 
 
 }

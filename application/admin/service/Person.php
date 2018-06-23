@@ -43,8 +43,9 @@ class Person extends Base{
 
     }
 
-    public function row($id){
-         return $this->dbObj->where(array('id'=>$id))->getObj();
+    public function row($id,$where=array()){
+        $where['id'] = $id;
+         return $this->dbObj->where($where)->getObj();
     }
 
     /**
@@ -95,7 +96,7 @@ class Person extends Base{
      * @param int $id
      * @return mixed
      */
-    public function del($id){
+    public function del($id,$where=array()){
         $id = intval($id);
          if($id<=0){
              $this->errors = '人员不存在';
@@ -104,7 +105,8 @@ class Person extends Base{
          if($this->errors){
              return $this->getSuccInfo(0,$this->errors);
          }
-          $this->dbObj->where(array('id'=>$id))->data(array('del'=>1))->update();
+         $where['id'] = $id;
+          $this->dbObj->where($where)->data(array('del'=>1))->update();
          return $this->getSuccInfo();
 
     }
@@ -115,7 +117,7 @@ class Person extends Base{
      * @param $data
      * @return mixed
      */
-    public function edit($id,$data){
+    public function edit($id,$data,$where=array()){
         $id = intval($id);
         if($id<=0){
             $this->errors = '管理员不存在';
@@ -125,8 +127,9 @@ class Person extends Base{
         $update = $data;
         if($this->model->checkUpdate($data,$this->errors)) {//验证通过
             try{
+                $where['id'] = $id;
                 $update['pinyin'] = $this->getPinyin($update['name']);
-                $this->dbObj->where(array('id'=>$id))->data($update)->update();
+                $this->dbObj->where($where)->data($update)->update();
             }catch(\Exception $e){
                 return $this->getSuccInfo(0,$e->getMessage());
             }

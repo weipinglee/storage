@@ -42,7 +42,7 @@ class Role extends Base{
 
     }
 
-    public function row($id){
+    public function row($id,$where=array()){
          $row=  $this->dbObj->where(array('id'=>$id))->getObj();
          if(isset($row['id'])){
              $priObj = new DbModel('role_pri');
@@ -94,7 +94,7 @@ class Role extends Base{
      * @param int $id
      * @return mixed
      */
-    public function del($id){
+    public function del($id,$where=array()){
         $this->dbObj->beginTrans();
         $res = $this->dbObj->where(array('id'=>$id))->delete();
         if($res){
@@ -113,7 +113,7 @@ class Role extends Base{
      * @param $data
      * @return mixed
      */
-    public function edit($id,$data){
+    public function edit($id,$data,$where=array()){
         if(intval($id)<=0){
             $this->errors = '不存在';
         }
