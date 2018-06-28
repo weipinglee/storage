@@ -20,6 +20,13 @@ class Admin extends Base
         $this->view->engine->layout('layout/layout');
     }
 
+    /**
+     *
+     * this is api
+     * @api
+     * @param int page 分页码
+     * @return mixed
+     */
     public function lst()
     {
         $model = $this->serviceModel;

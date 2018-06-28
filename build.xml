@@ -2,6 +2,8 @@
 
 <project name="storage" default="build">
 
+    <property name="testDir" value="${project.basedir}/tests" />
+    <property name="docDir" value="${project.basedir}/doc" />
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
     <!-- ============================================  -->
@@ -27,5 +29,11 @@
         </exec>
     </target>
 
+
+    <target name="doc">
+        <exec logoutput="true" checkreturn="true"
+              command="phpdoc -d ${project.basedir}/application/admin/controller
+                -f ${project.basedir}/application/admin/controller/Admin.php -t ${docDir}" />
+    </target>
 
 </project>

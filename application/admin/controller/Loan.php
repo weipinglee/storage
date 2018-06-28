@@ -141,7 +141,10 @@ class Loan extends Base{
         $request = Request::instance();
         if($request->isPost()){
             $id = $request->param('id');
-            $data = $request->param();
+            $data = $request->param();//print_r($data);
+            if($data['exp_final_income']!=$data['real_final_income'] && $data['note']==''){
+                die(json_encode(array('success'=>0,'info'=>'最后收益不等于预期分成后收益，请填写备注')));
+            }
             $data['manual_over_time'] = date('Y-m-d H:i:s');
             $data['status'] = '已结束';
             unset($data['id']);
