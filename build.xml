@@ -2,29 +2,30 @@
 
 <project name="storage" default="build">
 
-    <property name="testDir" value="${project.basedir}/tests" />
-    <property name="docDir" value="${project.basedir}/doc" />
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
     <!-- ============================================  -->
-    <target name="build" depends="db">
-        <property name="db.user" value="root" />
-        <property name="db.pass" value="123456" />
-        <property name="db.ip" value="localhost" />
-        <property name="db.db_name" value="fund" />
-        <property name="class_path" value="" />
-        <property name="mysql_driver" value="" />
+    <target name="build" depends="db" />
+    <includepath classpath="C:\Program Files\Java\jdk1.8.0_171\lib" />
+    <includepath classpath="D:\liquibase" />
+    <property name="testDir" value="${project.basedir}/tests" />
+    <property name="docDir" value="${project.basedir}/doc" />
+    <property name="db.user" value="root" />
+    <property name="db.pass" value="123456" />
+    <property name="db.ip" value="localhost" />
+    <property name="db.name" value="fund" />
 
-    </target>
+
 
     <target name="db">
-        <exec command="
-    liquibase --driver=com.mysql.jdbc.Driver
-     --classpath=/path/to/classes
-     --changeLogFile=db/database.xml
-     --url='jdbc:mysql://${db.ip}/${db.db_name}'
-    --username=${db.user}
-    --password=${db.pass} " >
+        <exec logoutput="true" checkreturn="true" command='liquibase
+        --classpath=D:\liquibase\lib\mysql-connector-java-8.0.11\mysql-connector-java.jar
+        --driver=com.mysql.cj.jdbc.Driver
+        --changeLogFile=${project.basedir}\db\database.xml
+        --url="jdbc:mysql://127.0.0.1:3306/${db.name}?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=GMT%2B8"
+        --username=${db.user}
+        --password=${db.pass}
+        update'  >
 
         </exec>
     </target>

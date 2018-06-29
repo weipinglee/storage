@@ -6,7 +6,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <include file="D:\wamp64\www\fund\db\structure.xml"/>
-    <include file="D:\wamp64\www\fund\db\data_init.xml"/>
-    <include file="D:\wamp64\www\fund\db\st_privilege.sql"/>
+    <include file="structure.xml" relativeToChangelogFile="true"/>
+    <include file="data_init.xml" relativeToChangelogFile="true"/>
+    <include file="st_privilege.sql" relativeToChangelogFile="true"/>
+    <include file="loan_chg.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>
