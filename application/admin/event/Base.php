@@ -13,13 +13,14 @@ abstract class Base {
 
     public function __construct(Request $request = null)
     {
-        $this->serviceModel = \think\Loader::model('Loan','service');
         $loginObj = \think\Loader::model('Admin');
         $this->login = $loginObj->logData();
 
     }
 
     abstract public function lst($where=array(),$page=1,$pagesize=10);
+
+    abstract public function pageBar();
 
     abstract public function row($id);
 

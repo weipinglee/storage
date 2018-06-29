@@ -1,0 +1,133 @@
+
+<div class="row" id="app">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>借贷添加 <small></small></h5>
+
+            </div>
+            <div class="ibox-content">
+                <form method="post" action="{:url('admin/Loan/add')}" class="form-horizontal" auto_submit="1" redirect_url="{:url('admin/Loan/lst')}">
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">选择人员：</label>
+                        <input type="hidden" name="person_id" :value="selectPerson.id" datatype="*"/>
+                        <input type="hidden" name="status" :value="loan.status" />
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control"  v-on:blur="selectFirstOne" v-on:focus="inputFocus" v-on:compositionstart="getPersonStart"
+                                   v-on:compositionend="getPersonEnd" v-on:input="getPerson"
+                                   v-model="pname"   list="personList" style="width: 50%;"/>
+                            <div id="person_list" style="position:absolute;z-index:999;background-color: white;width:50%;">
+                                <p v-for="person in persons" :pid="person.id" :mobile="person.mobile" :shenfenzheng="person.shenfenzheng" v-on:click="toselectPerson($event)">{{person.name}}</p>
+
+                            </div>
+
+
+
+                        </div>
+
+                        <label class="col-sm-2 control-label">手        机：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" disabled class="form-control"   style="width: 50%;" :value="selectPerson.mobile"/>
+                        </div>
+
+                        <label class="col-sm-2 control-label">身份证号：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" disabled class="form-control"  style="width: 50%;" :value="selectPerson.shenfenzheng"/>
+                        </div>
+
+                        <label class="col-sm-2 control-label">开始时间：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input class=" form-control" v-model="loan.begin_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
+                                   name="begin_date" value="" style="width: 50%;">
+                        </div>
+
+                        <label class="col-sm-2 control-label">结束时间：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input class=" form-control"  v-model="loan.end_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                   name="end_date" value="" style="width: 50%;">
+                        </div>
+
+                        <label class="col-sm-2 control-label">贷款金额：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="loan_amount" v-model="loan.amount" v-on:blur="computeIncome" class="form-control"  style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">借贷周期：</label>
+                        <div class="col-sm-10 my-margin">
+                            <select class="form-control" name="period" v-model="loan.period" v-on:change="computeIncome" style="width: 50%;">
+                                <option value="日">日</option>
+                                <option value="月">月</option>
+                                <option value="年">年</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">借贷费率：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="rate" class="form-control" v-on:blur="computeIncome" v-model="loan.rate" style="width: 50%;display:inline;" /><span>‰</span>
+                        </div>
+
+                        <label class="col-sm-2 control-label">预期收益：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="hidden" name="exp_income"  v-model="loan.exp_income"  />
+                            <input type="text" name="exp_income" disabled class="form-control" v-model="loan.exp_income" style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">推荐人：</label>
+                        <input type="hidden" name="rec_person_id" :value="selectRecPerson.id" />
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" class="form-control"   v-on:focus="inputRecFocus" v-on:compositionstart="getPersonStart"
+                                   v-on:compositionend="getPersonEnd" v-on:input="getRecPerson"
+                                   v-model="rec_pname"    style="width: 50%;"/>
+                            <div id="rec_list" style="position:absolute;z-index:999;background-color: white;width:50%;">
+                                <p v-for="person in recPersons" :pid="person.id" :mobile="person.mobile" :shenfenzheng="person.shenfenzheng" v-on:click="toselectRecPerson($event)">{{person.name}}</p>
+
+                            </div>
+                        </div>
+
+                        <label class="col-sm-2 control-label">推荐人分成：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="rec_rate" v-model="loan.rec_rate" v-on:blur="computeIncome" class="form-control"  style="width: 50%;display:inline;" /><span>%</span>
+                        </div>
+
+                        <label class="col-sm-2 control-label">预期收益-分成：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="hidden" name="exp_final_income"  v-model="loan.exp_final_income"  />
+
+                            <input type="text"  disabled v-model="loan.exp_final_income" class="form-control"  style="width: 50%;" />
+                        </div>
+
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                </form>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button class="btn btn-primary" v-on:click="formSubmit(0)">保存</button>
+
+                        <button class="btn btn-danger" v-on:click="formSubmit(1)">提交</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green"})
+    });
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+<script type="text/javascript" src="__PUBLIC__ADMIN/js/project/loan.js"></script>
+<script type="text/javascript">
+
+    loanVue.personListUrl = '{:url("admin/Loan/personList")}';
+    loanVue.getExpincomeUrl = '{:url("admin/Loan/getExpIncome")}';
+    loanVue.getFinalIncomeUrl = '{:url("admin/Loan/getFinalIncome")}';
+</script>

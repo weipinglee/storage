@@ -25,6 +25,11 @@ class Template extends Base{
         return $data;
     }
 
+    public function pageBar()
+    {
+        return $this->serviceModel->pageBar();
+    }
+
     protected function listsWhere(){
         return '';
     }

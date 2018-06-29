@@ -22,7 +22,7 @@ class Storage extends Base{
         $model = $this->serviceModel;
         $whereParse = array();
         if(isset($where['del'])){
-            $whereParse['del'] = $where['del']==0 ? 0 : 1;
+            $whereParse['l.del'] = $where['del']==0 ? 0 : 1;
         }
 
         if(isset($where['end_date_l']) ){

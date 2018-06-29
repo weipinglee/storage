@@ -9,7 +9,7 @@
 namespace app\admin\Controller;
 use think\Request;
 
-class Loan extends Base{
+class LoanCredit extends Base{
 
     protected $serviceModel = null;
     protected $model = null;
@@ -24,26 +24,13 @@ class Loan extends Base{
     public function lst()
     {
         $request = Request::instance();
-        $event  = \think\loader::controller('Loan','event');
+        $event  = \think\loader::controller('LoanCredit','event');
         $page = isset($_GET['page']) ? $_GET['page'] : 1 ;
 
         $where = array();
         $where['del'] = 0;
         $param = $request->param();
-        if(isset($param['end_date_l'])){
-            $where['end_date_l'] = $param['end_date_l'];
-        }
-        if(isset($param['end_date_r'])){
-            $where['end_date_r'] = $param['end_date_r'];
-        }
 
-        if(isset($param['amount_l'])){
-            $where['loan_amount_l'] = $param['amount_l'];
-        }
-
-        if(isset($param['amount_r'])){
-            $where['loan_amount_r'] = $param['amount_r'];
-        }
 
         if(isset($param['rec_person']) ){
             $where['rec_person'] = $param['rec_person'];
@@ -58,11 +45,34 @@ class Loan extends Base{
             }
         }
 
-        $data = $event->lst($where,$page);//print_r($data);
+
+        $data = $event->lst($where,$page,5);//print_r($data);
+        $pageData = $event->pageBar();
+        $userArr = array();
+        foreach($data as $item){
+           if(!in_array($item['owner'],$userArr)){
+               $userArr[] = $item['owner'];
+           }
+
+        }
+
+        //重新获取这部分user的信用卡信息,因为第一次获取的列表可能把同一user割裂开
+        $where = array('owner'=>array('in',implode(',',$userArr)));
+        $data = $event->lst($where,0);
+
+        ///print_r($data);
+        //将相同的user的信用卡记录放在同一个子数组
+        $finalData = array();
+        foreach($data as $item){
+            $finalData[$item['owner']][] = $item;
+        }
+        //print_r($finalData);
+
         $this->assign(
-            'data',$data['data']
+            'data',$finalData
         );
-        $this->assign('pageData',$data['page']);
+        //print_r($data);
+        $this->assign('pageData',$pageData);
 
         // 设置页面中的信息
         $this->assign(array(
@@ -138,24 +148,7 @@ class Loan extends Base{
 
     public function over()
     {
-        $request = Request::instance();
-        if($request->isPost()){
-            $id = $request->param('id');
-            $data = $request->param();//print_r($data);
-            if($data['exp_final_income']!=$data['real_final_income'] && $data['note']==''){
-                die(json_encode(array('success'=>0,'info'=>'最后收益不等于预期分成后收益，请填写备注')));
-            }
-            $data['manual_over_time'] = date('Y-m-d H:i:s');
-            $data['status'] = '已结束';
-            unset($data['id']);
-            $res = $this->serviceModel->edit($id,$data);
-            die(json_encode($res));
-        }elseif($request->isGet()){
-            $id = $request->param('id');
-            $data = $this->serviceModel->row($id);
-            $this->assign('data',$data);
-            return $this->fetch();
-        }
+
 
     }
     public function delete()
@@ -166,28 +159,14 @@ class Loan extends Base{
     }
 
     public function getExpIncome(){
-         $model = \think\Loader::model('Loan','logic');
-        $request = Request::instance();
-         $begin = $request->param('begin_date');
-         $end = $request->param('end_date');
-         $amount = $request->param('amount');
-         $rate = $request->param('rate');
-         $period = $request->param('period');
-         $rec_rate = $request->param('rec_rate');
-         $res = $model->computeIncome($amount,$begin,$end,$rate,$period,$rec_rate);
-         die(json_encode($res));
+
     }
 
     /**
      * 获取最终收益
      */
     public function getFinalIncome(){
-        $model = \think\Loader::model('Loan','logic');
-        $request = Request::instance();
-        $end = $request->param('real_end_date');
-        $id = $request->param('id');
-        $res = $model->computeFinalIncome($id,$end);
-        die(json_encode($res));
+
     }
 
 

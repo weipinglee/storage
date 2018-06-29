@@ -1,0 +1,90 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="weipinglee" id="20180629-01">
+        <createTable tableName="st_loan_credit" >
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="owner" remarks="持卡人" type="INT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+            <column defaultValue="" name="bank" type="VARCHAR(100)" remarks="银行名称" >
+                <constraints nullable="false" />
+            </column>
+            <column defaultValue="" name="no" remarks="卡号" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="type" remarks="类型" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column defaultValue="0" name="limit" remarks="额度" type="DECIMAL(12,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column defaultValue="0" name="qian" remarks="欠款额度" type="DECIMAL(12,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="receive_day" type="varchar(20)" remarks="收卡日" />
+            <column name="account_day" type="varchar(20)" remarks="次月账单日" >
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="0" name="produce_fee" remarks="已产生费用" type="DECIMAL(12,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="chuzhang_ri" remarks="出账日" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="huankuan_ri" remarks="还款日" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="0" name="year_fee" remarks="年费" type="DECIMAL(12,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="year_fee_day" remarks="年费付款日" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="0" name="rate" remarks="代还费率" type="DECIMAL(5,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period" type="ENUM('年', '月', '日')" defaultValue="月" remarks="计费周期，默认月">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="rec_person" type="VARCHAR(20)" remarks="推荐人">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="rec_rate" type="DECIMAL(5, 2)" remarks="推荐人费率">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="exp_final_income" remarks="最终收益，预期收益减去推荐人获利" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="del" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="real_end_date" remarks="实际结束时间" type="date"/>
+            <column defaultValueNumeric="0.00" name="real_final_income" remarks="实际最终收益，实际收益减去推荐人获利" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0.00" name="real_income" remarks="实际收益" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet author="weipinglee" id="20180629-02" >
+        <addColumn tableName="st_loan_credit">
+            <column name="admin_id" type="int(11)" defaultValue="0" remarks="管理员id">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="weipinglee" id="20180629-03" >
+        <addColumn tableName="st_loan_credit">
+            <column name="rec_person_id" type="int(11)" defaultValue="0" remarks="推荐人id">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -11,12 +11,12 @@ namespace app\admin\service;
 
 use \extDB\DbModel;
 
-class Loan extends Base{
+class LoanCredit extends Base{
 
-
+    private $queryObj = null;
     public function __construct()
     {
-        $this->model = \think\Loader::model('Loan','model');
+        $this->model = \think\Loader::model('LoanCredit','model');
         $this->tableName = $this->model->getTable();
         $this->pk = $this->model->getPk();
         $this->dbObj = new DbModel($this->tableName);
@@ -30,17 +30,22 @@ class Loan extends Base{
      */
     public function lists($where='',$page=1,$pagesize=10,$bind=array()){
         $query = new \extDB\DbQuery($this->tableName . ' as l ');
-        $query->join = 'left join person as p1 on l.person_id=p1.id 
-                        left join person as p2 on l.rec_person_id=p2.id ';
-        $query->fields = 'l.*,p1.name ,p1.mobile,p1.shenfenzheng,DATEDIFF(now(),l.end_date) as diff';
-        $query->page = $page;
-        $query->pagesize = $pagesize!='' ? $pagesize : 10;
+        $query->join = 'left join person as p1 on l.owner=p1.id  ';
+        $query->fields = 'l.*,p1.name';
+        if($page>0){
+            $query->page = $page;
+            $query->pagesize = $pagesize!='' ? $pagesize : 10;
+        }
         $query->where = $where ;
         $query->bind = $bind;
         $query->order = 'l.id desc';
         $data = $query->find();
-        $pageData = $query->getPageData();
-         return array('data'=>$data,'page'=>$pageData);
+        $this->queryObj = $query;
+        return $data;
+    }
+
+    public function pageBar(){
+        return $this->queryObj->getPageData();
     }
 
     public function row($id,$where=array()){
@@ -52,7 +57,7 @@ class Loan extends Base{
         $query = new \extDB\DbQuery($this->tableName . ' as l ');
         $query->join = 'left join person as p1 on l.person_id=p1.id 
                         left join person as p2 on l.rec_person_id=p2.id ';
-        $query->fields = 'l.*,p1.id as person_id,p1.name ,p1.mobile,p1.shenfenzheng,p2.name as rec_name';
+        $query->fields = 'l.*,p1.id as owner,p1.name ,p1.mobile,p1.shenfenzheng,p2.name as rec_name';
          $query->where = $where;
          return $query->getObj();
     }
@@ -65,12 +70,6 @@ class Loan extends Base{
     public function add($data){
          $this->dbObj->beginTrans();
          if($this->model->checkInsert($data,$this->errors)){//验证通过
-             if($data['begin_date']==''){
-                 $data['begin_date'] = null;
-             }
-             if($data['end_date']==''){
-                 $data['end_date'] = null;
-             }
              $num = $this->dbObj->data($data)->add();
 
              if($num>0){
@@ -117,7 +116,7 @@ class Loan extends Base{
      */
     public function edit($id,$data,$where=array()){
         if(intval($id)<=0){
-            $this->errors = '该贷款存在';
+            $this->errors = '该贷款不存在';
         }
         $id = intval($id);
         if($this->model->checkUpdate($data,$this->errors)) {//验证通过

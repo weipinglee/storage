@@ -87,6 +87,7 @@
                         <span class="nav-label"><?php echo $v['pri_name']; ?></span>
                         <span class="fa arrow"></span>
                     </a>
+                    <?php if(!empty($v['children'])){ ?>
                     <?php foreach($v['children'] as $k1=>$v1): ?>
                     <ul class="nav nav-second-level">
                         <li>
@@ -94,7 +95,8 @@
                                href="{:url($v1['module_name'] . '/' .$v1['controller'] .'/'. $v1['action_name'])}"><?php echo $v1['pri_name']; ?></a>
                         </li>
                     </ul>
-                    <?php endforeach; ?>
+                    <?php endforeach; } ?>
+
                 </li>
                 <?php endforeach; ?>
 

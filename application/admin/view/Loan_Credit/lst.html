@@ -1,0 +1,96 @@
+<div class="searchBar" id="search">
+    <div class="col-sm-6" style="width:100%;">
+
+        <div id="DataTables_Table_0_filter" class="dataTables_filter" style="float:right">
+            <form action="" method="get">
+
+                <span>推荐人：</span>
+                <input type="text" v-model="fills.rec_person" name="rec_person" style="width:100px;"/>
+
+
+                <input type="submit"  class="btn btn-primary"  style="display:inline" aria-controls="DataTables_Table_0" value="查找"/>
+
+            </form>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__ADMIN/js/project/searchbar.js" ></script>
+<script type="text/javascript">
+
+    searchVue.fills = {
+        'rec_person': searchJSON.rec_person ? searchJSON.rec_person : ''
+      //  'status' : searchJSON.status ? searchJSON.status : ''
+    };
+
+
+</script>
+<div class="row" id="list">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+
+                <table class="table  table-bordered table-hover dataTables-example">
+                    <thead>
+                    <tr>
+                        <th>持卡人</th>
+                        <th >所属银行</th>
+                        <th >欠款额度</th>
+                        <th>收卡日</th>
+                        <th>次月账单日</th>
+                        <th>出账日</th>
+                        <th>还款日</th>
+                        <th>年费费用</th>
+                        <th>年费扣款日</th>
+
+                        <th width="120px">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($data as $key => $v): ?>
+
+                        <?php
+                        $num = count($v);
+                        $qianTotal = 0;
+                        foreach ($v as $k => $c): ?>
+                        <?php $qianTotal += $c['qian']; ?>
+                            <tr class="gradeA" >
+                                {if condition="$k==0"}
+                                <td rowspan="{$num}">{$c['name']}</td>
+                                {/if}
+                                <td>{$c['bank']}</td>
+                                <td>￥{$c['qian']}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td align="center">
+                                    <a title="编辑" href=""  style="text-decoration:none"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                                   <a title="删除" ajax_delete="1" ajax_confirm="1" ajax_id="" ajax_url="" class="ml-5" style="text-decoration:none;color: red;"><i class="fa fa-trash-o"></i></a>
+
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td colspan="2">欠款总计 </td>
+                            <td colspan="8">￥{$qianTotal}</td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+
+                </table>
+
+               {include file="layout/pagebar"}
+
+            </div>
+        </div>
+    </div>
+</div>
