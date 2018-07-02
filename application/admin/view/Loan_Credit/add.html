@@ -3,17 +3,17 @@
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>借贷添加 <small></small></h5>
+                <h5>信用卡借贷添加 <small></small></h5>
 
             </div>
             <div class="ibox-content">
-                <form method="post" action="{:url('admin/Loan/add')}" class="form-horizontal" auto_submit="1" redirect_url="{:url('admin/Loan/lst')}">
+                <form method="post" action="{:url('admin/LoanCredit/add')}" class="form-horizontal" auto_submit="1" redirect_url="{:url('admin/LoanCredit/lst')}">
 
                     <div class="hr-line-dashed"></div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">选择人员：</label>
-                        <input type="hidden" name="person_id" :value="selectPerson.id" datatype="*"/>
+                        <label class="col-sm-2 control-label">持卡人：</label>
+                        <input type="hidden" name="owner" :value="selectPerson.id" datatype="*"/>
                         <input type="hidden" name="status" :value="loan.status" />
                         <div class="col-sm-10 my-margin">
                             <input type="text" class="form-control"  v-on:blur="selectFirstOne" v-on:focus="inputFocus" v-on:compositionstart="getPersonStart"
@@ -38,40 +38,74 @@
                             <input type="text" disabled class="form-control"  style="width: 50%;" :value="selectPerson.shenfenzheng"/>
                         </div>
 
-                        <label class="col-sm-2 control-label">开始时间：</label>
+                        <label class="col-sm-2 control-label">卡号：</label>
                         <div class="col-sm-10 my-margin">
-                            <input class=" form-control" v-model="loan.begin_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
-                                   name="begin_date" value="" style="width: 50%;">
+                            <input class=" form-control" v-model="loan.no" type="text"
+                                   name="no" value="" style="width: 50%;">
                         </div>
 
-                        <label class="col-sm-2 control-label">结束时间：</label>
+                        <label class="col-sm-2 control-label">银行名称：</label>
                         <div class="col-sm-10 my-margin">
-                            <input class=" form-control"  v-model="loan.end_date" v-on:blur="computeIncome" type="text" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                   name="end_date" value="" style="width: 50%;">
+                            <input class=" form-control" v-model="loan.bank"  type="text"
+                                   name="bank" value="" style="width: 50%;">
                         </div>
 
-                        <label class="col-sm-2 control-label">贷款金额：</label>
+                        <label class="col-sm-2 control-label">类型：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" name="loan_amount" v-model="loan.amount" v-on:blur="computeIncome" class="form-control"  style="width: 50%;" />
+                            <input class=" form-control" v-model="loan.type"  type="text"
+                                   name="type" value="" style="width: 50%;">
                         </div>
 
-                        <label class="col-sm-2 control-label">借贷周期：</label>
+                        <label class="col-sm-2 control-label">额度：</label>
                         <div class="col-sm-10 my-margin">
-                            <select class="form-control" name="period" v-model="loan.period" v-on:change="computeIncome" style="width: 50%;">
-                                <option value="日">日</option>
-                                <option value="月">月</option>
-                                <option value="年">年</option>
-                            </select>
+                            <input type="text" name="limit" v-model="loan.limit" class="form-control"  style="width: 50%;" />
                         </div>
-                        <label class="col-sm-2 control-label">借贷费率：</label>
+
+                        <label class="col-sm-2 control-label">欠款额度：</label>
                         <div class="col-sm-10 my-margin">
-                            <input type="text" name="rate" class="form-control" v-on:blur="computeIncome" v-model="loan.rate" style="width: 50%;display:inline;" /><span>‰</span>
+                            <input type="text" name="qian" v-model="loan.qian" class="form-control"  style="width: 50%;" />
                         </div>
+
+                        <label class="col-sm-2 control-label">收卡日：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="receive_day"  v-model="loan.receive_day" class="form-control"  style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">次月账单日：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="account_day" v-model="loan.account_day" class="form-control"  style="width: 50%;" />
+                        </div>
+
+                        <label class="col-sm-2 control-label">已产生费用：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="produce_fee" v-model="loan.produce_fee" class="form-control"  style="width: 50%;" />
+                        </div>
+                        <label class="col-sm-2 control-label">出账日：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="chuzhang_ri" v-model="loan.chuzhang_ri" class="form-control"  style="width: 50%;" />
+                        </div>
+                        <label class="col-sm-2 control-label">还款日：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="huankuan_ri" v-model="loan.huankuan_ri" class="form-control"  style="width: 50%;" />
+                        </div>
+                        <label class="col-sm-2 control-label">年费：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="year_fee" v-model="loan.year_fee" class="form-control"  style="width: 50%;" />
+                        </div>
+                        <label class="col-sm-2 control-label">年费付款日：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="year_fee_day"  v-model="loan.year_fee_day" class="form-control"  style="width: 50%;" />
+                        </div>
+                        <label class="col-sm-2 control-label">待还费率：</label>
+                        <div class="col-sm-10 my-margin">
+                            <input type="text" name="rate" v-model="loan.rate" class="form-control"  style="width: 50%;" />
+                        </div>
+
 
                         <label class="col-sm-2 control-label">预期收益：</label>
                         <div class="col-sm-10 my-margin">
                             <input type="hidden" name="exp_income"  v-model="loan.exp_income"  />
-                            <input type="text" name="exp_income" disabled class="form-control" v-model="loan.exp_income" style="width: 50%;" />
+                            <input type="text"  disabled class="form-control" v-model="loan.exp_income" style="width: 50%;" />
                         </div>
 
                         <label class="col-sm-2 control-label">推荐人：</label>
@@ -97,6 +131,7 @@
 
                             <input type="text"  disabled v-model="loan.exp_final_income" class="form-control"  style="width: 50%;" />
                         </div>
+
 
                     </div>
 
@@ -127,7 +162,7 @@
 <script type="text/javascript" src="__PUBLIC__ADMIN/js/project/loan.js"></script>
 <script type="text/javascript">
 
-    loanVue.personListUrl = '{:url("admin/Loan/personList")}';
-    loanVue.getExpincomeUrl = '{:url("admin/Loan/getExpIncome")}';
-    loanVue.getFinalIncomeUrl = '{:url("admin/Loan/getFinalIncome")}';
+    loanVue.personListUrl = '{:url("admin/LoanCredit/personList")}';
+    loanVue.getExpincomeUrl = '{:url("admin/LoanCredit/getExpIncome")}';
+    loanVue.getFinalIncomeUrl = '{:url("admin/LoanCredit/getFinalIncome")}';
 </script>

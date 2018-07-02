@@ -31,7 +31,7 @@ class Person extends Base{
     public function lists($where='',$page=1,$pagesize=10,$bind=array()){
         $query = new \extDB\DbQuery($this->tableName);
         $query->page = $page;
-        $query->pagesize = 10;
+        $query->pagesize = $pagesize;
         $whereStr = $where;
         $query->where = $whereStr ;
         $query->bind = $bind;

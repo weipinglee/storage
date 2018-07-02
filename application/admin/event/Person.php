@@ -36,6 +36,11 @@ class Person extends Base{
         return $data;
     }
 
+    public function pageBar()
+    {
+        // TODO: Implement pageBar() method.
+    }
+
     public function row($id){
         $where = $this->login['id']==1 ? array() : array('admin_id'=>$this->login['id']);
         return $this->serviceModel->row($id,$where);

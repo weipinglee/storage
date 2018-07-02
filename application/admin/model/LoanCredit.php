@@ -31,7 +31,6 @@ class LoanCredit extends Base{
     );
 
     protected $insertRules = array(
-        'person_id' => 'require',
 
     );
 

@@ -87,4 +87,18 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet author="weipinglee" id="1028070201">
+        <addColumn tableName="st_loan_credit">
+            <column name="exp_income" type="decimal(12,2)" defaultValue="0" remarks="预期收益">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+        <addColumn tableName="st_loan_credit">
+            <column name="status" type="int(2)" defaultValue="0" remarks="状态
+">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
